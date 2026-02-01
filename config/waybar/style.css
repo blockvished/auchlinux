@@ -8,6 +8,8 @@
 window#waybar {
     background-color: transparent;
     color: #e8eaed;
+    /* mix-blend-mode: difference; */
+    background-color: rgba(0, 0, 0, 0.1);
     transition-property: background-color;
     transition-duration: .5s;
 }
@@ -30,8 +32,8 @@ button:hover {
     box-shadow: inset 0 -3px #e8eaed;
 }
 
-#pulseaudio:hover {
-    background-color: #a37800;
+#workspaces {
+    transition: all 1s ease-in-out;
 }
 
 #workspaces button {
@@ -41,42 +43,30 @@ button:hover {
     background-color: transparent;
     background: rgba(0, 0, 0, 0.5);
     border-radius: 20px;
-    transition: 0.2s ease-in-out;
+    transition: all 200ms ease-in-out;
+    color: #7f849c;
+}
+
+#workspaces button:not(.empty) {
+    /* A soft highlight color for workspaces with apps */
+    color: #f5e0dc; 
+    background: rgba(0, 0, 0, 0.5);
+    /* Add a small blue underline for occupied ones */
+    box-shadow: inset 0 -3px #89b4fa; 
 }
 
 #workspaces button:hover {
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: #e8eaed;
     border-radius: 20px;
-}
-
-#workspaces button.focused {
-    background: rgba(0, 0, 0, 0.2);
-    box-shadow: inset 0 -3px #e8eaed;
-}
-
-#workspaces button.urgent {
-    background-color: #eb4d4b;
 }
 
 #workspaces button.active {
     color: #e8eaed;
     background: rgba(0, 0, 0, 0.3);
     box-shadow: inset 0 -3px #e8eaed;
+    min-width: 20px;
 }
-
-#workspaces button.urgent {
-    background-color: #eb4d4b;
-}
-
-/* 
-#mode {
-    background-color: #64727D;
-    box-shadow: inset 0 -3px #ffffff;
-} */
-
-/* background-color: #64727D; */
-/* background-color: #323d49; */
-/* border-radius: 2px; */
 
 #clock,
 #battery,
@@ -85,15 +75,29 @@ button:hover {
 #pulseaudio,
 #wireplumber,
 #custom-media,
+#custom-nightlight,
 #tray,
 #mode,
+#hyprland-window,
 #idle_inhibitor,
 #scratchpad,
 #power-profiles-daemon,
+#window {    
+    margin: 0 4px;
+    padding: 0 13px;
+    color: #e8eaed;
+    border-radius: 8px;
+    box-shadow: inset 0 -2px #a6bbda;
 
-#window,
-#workspaces {
-    margin: 0 2px;
+}
+
+#custom-cava {
+    background: rgba(0, 0, 0, 0.4);
+    color: #89b4fa;
+    margin: 0 4px;
+    padding: 0 10px;
+    border-radius: 8px;
+    box-shadow: inset 0 -2px #a6bbda;
 }
 
 /* If workspaces is the leftmost module, omit left margin */
@@ -114,10 +118,13 @@ button:hover {
     background: rgba(0, 0, 0, 0.4);
 }
 
+#custom-nightlight {
+    background: rgba(0, 0, 0, 0.4);
+}
+
 #power-profiles-daemon {
     padding-right: 15px;
 }
-
 
 #power-profiles-daemon.performance {
     background-color: #f53c3c;
@@ -159,6 +166,10 @@ button:hover {
     background-color: #eb4d4b;
 }
 
+#hyprland-window {
+    background: rgba(0, 0, 0, 0.4);
+}
+
 #memory {
     background: rgba(0, 0, 0, 0.4);
 }
@@ -181,17 +192,20 @@ button:hover {
     border-radius: 5px;
 }
 
+#mode {
+    background-color: #64727D;
+    box-shadow: inset 0 -3px #ffffff;
+}
+
+/* background-color: #64727D; */
+/* background-color: #323d49; */
+/* border-radius: 2px; */
+
+
 /* 
 #battery.charging, #battery.plugged {
     color: #ffffff;
     background-color: #26A65B;
-}
-
-@keyframes blink {
-    to {
-        background-color: #ffffff;
-        color: #000000;
-    }
 }
 
 Using steps() instead of linear as a timing function to limit cpu usage 
@@ -205,12 +219,15 @@ Using steps() instead of linear as a timing function to limit cpu usage
     animation-direction: alternate;
 }
 
-label:focus {
-    background-color: #000000;
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: #000000;
+    }
 }
 
-#disk {
-    background-color: #964B00;
+label:focus {
+    background-color: #000000;
 }
 
 #wireplumber {
@@ -229,7 +246,6 @@ label:focus {
 #custom-media.custom-vlc {
     background-color: #ffa000;
 }
-
 
 #tray > .passive {
     -gtk-icon-effect: dim;

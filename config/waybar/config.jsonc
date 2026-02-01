@@ -4,38 +4,63 @@
     "margin": 2,
     "spacing": 4,
     "modules-left": [
+        "custom/cava",
+        "memory",
         "hyprland/workspaces",
         "hyprland/window"
     ],
     "modules-center": [
         "clock",
-        "memory",
         "custom/media"
     ],
-    // "idle_inhibitor"
-    // "mpd",
-    // "idle_inhibitor",
     "modules-right": [
         "pulseaudio",
         "temperature",
         "tray",
         "battery",
+        "custom/nightlight",
         "power-profiles-daemon"
     ],
+    "custom/cava": {
+        "exec": "$HOME/.config/waybar/scripts/cava.sh",
+        "format": "{}",
+        "restart-interval": 1
+    },
+    "cava": {
+        "framerate": 30,
+        "autosens": 1,
+        "bars": 5,
+        "lower_cutoff_freq": 50,
+        "higher_cutoff_freq": 10000,
+        "method": "pipewire",
+        "source": "auto",
+        "stereo": true,
+        "reverse": false,
+        "bar_delimiter": 0,
+        "monstercat": false,
+        "waves": false,
+        "noise_reduction": 0.77,
+        "input_delay": 2,
+        "format-icons": [
+            " ",
+            "▂",
+            "▃",
+            "▄",
+            "▅",
+            "▆",
+            "▇",
+            "█"
+        ],
+        "actions": {
+            "on-click-right": "mode"
+        }
+    },
     "hyprland/workspaces": {
         "format": "{name}",
         "on-click": "activate",
-        "format-icons": {
-            "1": "",
-            "2": "",
-            "3": "",
-            "urgent": "",
-            "active": "",
-            "default": ""
-        },
         "sort-by-number": true,
         "persistent-workspaces": {
-            "*": 4
+            "*": 3
         }
     },
     "hyprland/window": {
@@ -61,7 +86,8 @@
         }
     },
     "memory": {
-        "format": "Mem {}% "
+        "format": "{}% ",
+        "on-click": "kitty -e btop"
     },
     "custom/media": {
         "format": "{icon} {text}",
@@ -102,11 +128,7 @@
     "temperature": {
         "critical-threshold": 80,
         "format": "{temperatureC}°C {icon}",
-        "format-icons": [
-            "",
-            "",
-            ""
-        ]
+        "format-icons": ["❄","°","▲"]
     },
     "tray": {
         // "icon-size": 21,
@@ -147,6 +169,14 @@
             "balanced": "",
             "power-saver": ""
         }
+    },
+    "custom/nightlight": {
+        "format": "{}",
+        "return-type": "json",
+        "exec": "~/.config/hypr/scripts/nightlight.sh status",
+        "on-click": "~/.config/hypr/scripts/nightlight.sh toggle",
+        "signal": 8, // This must match the WAYBAR_SIGNAL in the script
+        "interval": "once" // We don't need to poll if we use signals!
     }
     // "custom/power": {
     //  "format" : "⏻ ",
