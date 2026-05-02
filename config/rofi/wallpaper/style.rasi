@@ -1,0 +1,92 @@
+configuration {
+    show-icons: true;
+    matching: "normal";
+    sorting-method: "normal";
+    cycle: true;
+}
+
+@import "~/.config/rofi/colors/onedark.rasi"
+
+* {
+    font: "JetBrainsMono Nerd Font Propo 13";
+    background-soft: #1f232cff;
+}
+
+window {
+    transparency: "real";
+    location: center;
+    anchor: center;
+    width: 760px;
+    border-radius: 10px;
+    background-color: @background;
+}
+
+mainbox {
+    padding: 16px;
+    spacing: 10px;
+    background-color: transparent;
+    children: [ "inputbar", "listview" ];
+}
+
+inputbar {
+    padding: 10px 12px;
+    border-radius: 8px;
+    background-color: @background-alt;
+    text-color: @foreground;
+    children: [ "prompt", "entry" ];
+}
+
+prompt {
+    padding: 0px 8px 0px 0px;
+    background-color: transparent;
+    text-color: @selected;
+}
+
+entry {
+    background-color: transparent;
+    text-color: @foreground;
+    placeholder: "Search wallpapers...";
+}
+
+listview {
+    lines: 6;
+    columns: 1;
+    fixed-height: false;
+    dynamic: true;
+    scrollbar: false;
+    spacing: 6px;
+    background-color: transparent;
+}
+
+element {
+    padding: 8px;
+    border-radius: 8px;
+    background-color: transparent;
+    text-color: @foreground;
+    spacing: 12px;
+    orientation: horizontal;
+}
+
+element selected.normal {
+    background-color: @selected;
+    text-color: @background;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    vertical-align: 0.5;
+}
+
+element-icon {
+    size: 96px;
+    border-radius: 6px;
+    background-color: transparent;
+}
+
+error-message {
+    padding: 12px;
+    border-radius: 8px;
+    background-color: @background-soft;
+    text-color: @urgent;
+}
