@@ -97,7 +97,8 @@
             "custom/cava",
             "clock",
             "idle_inhibitor",
-            "custom/notification"
+            "custom/notification",
+            "custom/updates"
         ]
     },
     "clock": {
@@ -142,6 +143,14 @@
         "on-click": "swaync-client -t -sw",
         "on-click-right": "swaync-client -d -sw",
         "escape": true
+    },
+    "custom/updates": {
+        "exec": "~/.config/hypr/scripts/update-checker.sh --status",
+        "return-type": "json",
+        "interval": 300,
+        "on-click": "~/.config/hypr/scripts/update-checker.sh",
+        "tooltip": true,
+        "format": " <span color='#666666'>|</span> {}"
     },
     "memory": {
         "format": " {}% ",
@@ -250,8 +259,8 @@
         "return-type": "json",
         "exec": "~/.config/hypr/scripts/nightlight.sh status",
         "on-click": "~/.config/hypr/scripts/nightlight.sh toggle",
-        "signal": 8, // This must match the WAYBAR_SIGNAL in the script
-        "interval": "once" // We don't need to poll if we use signals!
+        "signal": 8,
+        "interval": 5
     }
     // "custom/power": {
     //  "format" : "⏻ ",

@@ -31,7 +31,11 @@ hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("~/.config/hypr/scripts/clipboard-men
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd("~/.config/hypr/scripts/clipboard-menu.sh options"))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
-hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("~/.config/hypr/scripts/nightlight.sh toggle"))
+hl.bind(mainMod .. " + N",             hl.dsp.exec_cmd("~/.config/hypr/scripts/nightlight.sh toggle"))
+hl.bind(mainMod .. " + SHIFT + N",     hl.dsp.exec_cmd("~/.config/hypr/scripts/nightlight.sh warmer"))
+hl.bind(mainMod .. " + ALT + N",       hl.dsp.exec_cmd("~/.config/hypr/scripts/nightlight.sh cooler"))
+hl.bind(mainMod .. " + SHIFT + G",     hl.dsp.exec_cmd("~/.config/hypr/scripts/nightlight.sh gamma-up"))
+hl.bind(mainMod .. " + ALT + G",       hl.dsp.exec_cmd("~/.config/hypr/scripts/nightlight.sh gamma-down"))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/wallpaper-picker.sh"))
 
@@ -66,6 +70,18 @@ end
 -- Example special workspace (scratchpad)
 hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+
+-- ── Hyprland Plugins ───────────────────────────────────────────
+-- Hyprexpo  : workspace grid overview  (toggle with SUPER + grave)
+hl.bind(mainMod .. " + grave", hl.dsp.exec_cmd("hyprctl dispatch hyprexpo:expo toggle"))
+-- Hyprbars  : window title bars         (toggle with SUPER + B)
+hl.bind(mainMod .. " + B",     hl.dsp.exec_cmd("hyprctl dispatch hyprbars:toggle"))
+-- Hyprspace : GNOME-like overview       (toggle with SUPER + TAB)
+hl.bind(mainMod .. " + Tab",   hl.dsp.exec_cmd("hyprctl dispatch hyprspace:overview toggle"))
+
+-- ── Update Checker ─────────────────────────────────────────────
+-- SUPER + U : open Rofi update picker
+hl.bind(mainMod .. " + U", hl.dsp.exec_cmd("~/.config/hypr/scripts/update-checker.sh"))
 
 -- Scroll through existing workspaces with mainMod + scroll
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))

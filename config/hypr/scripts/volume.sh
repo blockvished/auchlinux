@@ -27,20 +27,31 @@ is_muted() {
   wpctl get-volume "$sink" | grep -q MUTED
 }
 
+# ── Overdrive: true if volume > 100% ──────────────────────────
+is_overdrive() {
+  local vol
+  vol=$(wpctl get-volume "$sink" | awk '{ print $2 }')
+  awk -v v="$vol" 'BEGIN { exit (v > 1.0) ? 0 : 1 }'
+}
+
 notify_volume() {
   has notify-send || return 0
 
   local volume="$1"
-  local icon=""
+  local icon=""
   local message="${volume}%"
 
   if is_muted; then
-    icon=""
+    icon=""
     message="Muted"
   elif (( volume == 0 )); then
-    icon=""
+    icon=""
   elif (( volume < 50 )); then
-    icon=""
+    icon=""
+  elif (( volume > 100 )); then
+    # Overdrive mode — warn visually
+    icon=""
+    message="${volume}% ⚠ Overdrive"
   fi
 
   notify-send \
@@ -53,6 +64,39 @@ notify_volume() {
     -h "string:x-canonical-private-synchronous:volume" \
     -h "string:x-dunst-stack-tag:volume" \
     "$icon  Volume" "$message"
+}
+
+# ── Status: JSON output for Waybar custom module ──────────────
+status_json() {
+  local volume
+  volume=$(volume_percent)
+
+  local icon tooltip class
+
+  if is_muted; then
+    icon=""
+    tooltip="Muted"
+    class="muted"
+  elif (( volume == 0 )); then
+    icon=""
+    tooltip="${volume}%"
+    class="zero"
+  elif (( volume < 50 )); then
+    icon=""
+    tooltip="${volume}%"
+    class="low"
+  elif (( volume <= 100 )); then
+    icon=""
+    tooltip="${volume}%"
+    class="normal"
+  else
+    icon=""
+    tooltip="${volume}% — Overdrive active"
+    class="overdrive"
+  fi
+
+  printf '{"text":"%s %d%%","tooltip":"%s","class":"%s"}\n' \
+    "$icon" "$volume" "$tooltip" "$class"
 }
 
 case "${1:-}" in
@@ -80,11 +124,16 @@ case "${1:-}" in
       -e \
       -h "string:x-canonical-private-synchronous:microphone" \
       -h "string:x-dunst-stack-tag:microphone" \
-      "  Microphone" "$muted"
+      "  Microphone" "$muted"
+    exit 0
+    ;;
+  status)
+    # JSON for Waybar: ./volume.sh status
+    status_json
     exit 0
     ;;
   *)
-    printf 'Usage: %s {up|down|mute|mic-mute}\n' "$0" >&2
+    printf 'Usage: %s {up|down|mute|mic-mute|status}\n' "$0" >&2
     exit 1
     ;;
 esac
