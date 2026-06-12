@@ -4,12 +4,12 @@
     "margin": 2,
     "spacing": 4,
     "modules-left": [
-        "custom/cava",
         "memory",
         "hyprland/workspaces",
         "hyprland/window"
     ],
     "modules-center": [
+        "custom/cava",
         "clock",
         "custom/media"
     ],
