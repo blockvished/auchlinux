@@ -17,7 +17,7 @@
 hl.on("hyprland.start", function()
     hl.exec_cmd("waybar")
     hl.exec_cmd("awww-daemon")
-    hl.exec_cmd("swaync")
+    hl.exec_cmd("command -v swaync >/dev/null 2>&1 && swaync || command -v dunst >/dev/null 2>&1 && dunst")
     hl.exec_cmd("nm-applet --indicator")
     hl.exec_cmd("hypridle")
     hl.exec_cmd("~/.config/hypr/scripts/clipboard-watch.sh")

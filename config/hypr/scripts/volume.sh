@@ -1,9 +1,21 @@
 #!/usr/bin/env bash
 
-step="5%"
-sink="@DEFAULT_AUDIO_SINK@"
-source="@DEFAULT_AUDIO_SOURCE@"
-notify_id=91190
+set -euo pipefail
+
+step="${VOLUME_STEP:-5%}"
+sink="${VOLUME_SINK:-@DEFAULT_AUDIO_SINK@}"
+source="${VOLUME_SOURCE:-@DEFAULT_AUDIO_SOURCE@}"
+notify_id="${VOLUME_NOTIFY_ID:-91190}"
+mic_notify_id="${MIC_NOTIFY_ID:-91191}"
+
+has() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+has wpctl || {
+  printf 'volume.sh: wpctl is required\n' >&2
+  exit 1
+}
 
 volume_percent() {
   wpctl get-volume "$sink" | awk '{ printf "%d", $2 * 100 }'
@@ -14,6 +26,8 @@ is_muted() {
 }
 
 notify_volume() {
+  has notify-send || return 0
+
   local volume="$1"
   local icon=""
   local message="${volume}%"
@@ -39,8 +53,9 @@ notify_volume() {
     "$icon  Volume" "$message"
 }
 
-case "$1" in
+case "${1:-}" in
   up)
+    wpctl set-mute "$sink" 0
     wpctl set-volume -l 1 "$sink" "$step+"
     ;;
   down)
@@ -52,9 +67,10 @@ case "$1" in
   mic-mute)
     wpctl set-mute "$source" toggle
     muted="$(wpctl get-volume "$source" | grep -q MUTED && printf Muted || printf Unmuted)"
+    has notify-send || exit 0
     notify-send \
       -a "Microphone" \
-      -r 91191 \
+      -r "$mic_notify_id" \
       -u low \
       -t 900 \
       -e \

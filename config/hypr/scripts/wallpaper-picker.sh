@@ -34,3 +34,17 @@ fi
 awww img "$wallpaper" --resize crop --transition-type grow --transition-pos center --transition-duration 1
 printf '%s\n' "$wallpaper" > "$state_file"
 notify-send -u low -t 1200 "Wallpaper" "$choice"
+
+# Generate wallpaper blur and quad caches dynamically for Rofi theme styling
+(
+  hyde_cache="$HOME/.cache/hyde"
+  mkdir -p "$hyde_cache"
+  blur_file="$hyde_cache/wall.blur"
+  quad_file="$hyde_cache/wall.quad"
+  sqre_file="$hyde_cache/wall.sqre"
+
+  magick "$wallpaper"[0] -strip -scale 10% -blur 0x3 -resize 100% "$blur_file"
+  magick "$wallpaper"[0] -strip -thumbnail 500x500^ -gravity center -extent 500x500 "$sqre_file"
+  magick "$sqre_file" \( -size 500x500 xc:white -fill "rgba(0,0,0,0.7)" -draw "polygon 400,500 500,500 500,0 450,0" -fill black -draw "polygon 500,500 500,0 450,500" \) -alpha Off -compose CopyOpacity -composite "$quad_file"
+  rm -f "$sqre_file"
+) &

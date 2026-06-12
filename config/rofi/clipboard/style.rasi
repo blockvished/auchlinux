@@ -1,83 +1,131 @@
-configuration {
-    show-icons: false;
-    matching: "normal";
-    sorting-method: "normal";
-    cycle: true;
-}
+/**
+ * ROFI Layout 
+ *
+ * Base style for clipboard style Layout.
+ * 
+ * User: The HyDE Project [ mini dropdown menu ]
+ * Copyright: The HyDE Project
+ */
 
-@import "~/.config/rofi/colors/onedark.rasi"
+// Config //
+configuration {
+    show-icons:                  false;
+}
 
 * {
-    font: "JetBrainsMono Nerd Font Propo 13";
-    background-soft: #1f232cff;
+    font:               "JetBrainsMono Nerd Font Propo 13";
+    main-bg:            #11111be6;
+    main-fg:            #cdd6f4ff;
+    main-br:            #cba6f7ff;
+    main-ex:            #f5e0dcff;
+    select-bg:          #b4befeff;
+    select-fg:          #11111bff;
+    separatorcolor:     transparent;
+    border-color:       transparent;
 }
 
+// Main //
 window {
-    transparency: "real";
-    location: center;
-    anchor: center;
-    width: 720px;
-    border-radius: 10px;
-    background-color: @background;
+    width:                       23em;
+    height:                      30em;
+    transparency:                "real";
+    fullscreen:                  false;
+    enabled:                     true;
+    cursor:                      "default";
+    spacing:                     0em;
+    padding:                     0em;
+    border:                      2px;
+    border-color:                @main-br;
+    border-radius:               12px;
+    background-color:            @main-bg;
 }
-
 mainbox {
-    padding: 16px;
-    spacing: 10px;
-    background-color: transparent;
-    children: [ "inputbar", "listview" ];
+    enabled:                     true;
+    spacing:                     0em;
+    padding:                     0.5em;
+    orientation:                 vertical;
+    children:                    [ "wallbox" , "listbox" ];
+    background-color:            transparent;
+}
+wallbox {
+    spacing:                     0em;
+    padding:                     0em;
+    expand:                      false;
+    orientation:                 horizontal;
+    background-color:            transparent;
+    background-image:            url("~/.cache/hyde/wall.blur", width);
+    children:                    [ "wallframe" , "inputbar" ];
+}
+wallframe {
+    width:                       5em;
+    spacing:                     0em;
+    padding:                     0em;
+    expand:                      false;
+    background-color:            @main-bg;
+    background-image:            url("~/.cache/hyde/wall.quad", width);
 }
 
+// Inputs //
 inputbar {
-    padding: 10px 12px;
-    border-radius: 8px;
-    background-color: @background-alt;
-    text-color: @foreground;
-    children: [ "prompt", "entry" ];
+    enabled:                     true;
+    padding:                     0em;
+    children:                    [ "entry" ];
+    background-color:            @main-bg;
+    expand:                      true;
 }
-
-prompt {
-    padding: 0px 8px 0px 0px;
-    background-color: transparent;
-    text-color: @selected;
-}
-
 entry {
-    background-color: transparent;
-    text-color: @foreground;
-    placeholder: "Search clipboard...";
+    enabled:                     true;
+    padding:                     1.8em;
+    text-color:                  @main-fg;
+    background-color:            transparent;
+    placeholder:                 "Search clipboard...";
+    placeholder-color:           #6c7086ff;
 }
 
+// Lists //
+listbox {
+    spacing:                     0em;
+    padding:                     0em;
+    orientation:                 vertical;
+    children:                    [ "dummy" , "listview" , "dummy" ];
+    background-color:            transparent;
+}
 listview {
-    lines: 8;
-    columns: 1;
-    fixed-height: false;
-    dynamic: true;
-    scrollbar: false;
-    spacing: 6px;
-    background-color: transparent;
+    enabled:                     true;
+    padding:                     0.5em;
+    columns:                     1;
+    lines:                       11; 
+    cycle:                       true;
+    fixed-height:                true;
+    fixed-columns:               false;
+    expand:                      false;
+    cursor:                      "default";
+    background-color:            transparent;
+    text-color:                  @main-fg;
+}
+dummy {
+    spacing:                     0em;
+    padding:                     0em;
+    background-color:            transparent;
 }
 
+// Elements //
 element {
-    padding: 11px 12px;
-    border-radius: 8px;
-    background-color: transparent;
-    text-color: @foreground;
+    enabled:                     true;
+    padding:                     0.5em;
+    cursor:                      pointer;
+    background-color:            transparent;
+    text-color:                  @main-fg;
+    border-radius:               8px;
 }
-
 element selected.normal {
-    background-color: @selected;
-    text-color: @background;
+    background-color:            @select-bg;
+    text-color:                  @select-fg;
 }
-
 element-text {
-    background-color: transparent;
-    text-color: inherit;
-}
-
-error-message {
-    padding: 12px;
-    border-radius: 8px;
-    background-color: @background-soft;
-    text-color: @urgent;
+    vertical-align:              0.0;
+    horizontal-align:            0.0;
+    cursor:                      inherit;
+    background-color:            transparent;
+    text-color:                  inherit;
 }

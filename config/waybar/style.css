@@ -12,6 +12,7 @@ window#waybar {
     background-color: rgba(0, 0, 0, 0.1);
     transition-property: background-color;
     transition-duration: .5s;
+    border-radius: 10px;
 }
 
 window#waybar.hidden {
@@ -71,8 +72,11 @@ button:hover {
 #clock,
 #battery,
 #memory,
+#cpu,
 #temperature,
 #pulseaudio,
+#backlight,
+#network,
 #wireplumber,
 #custom-media,
 #custom-nightlight,
@@ -92,6 +96,9 @@ button:hover {
 }
 
 #custom-cava {
+    font-family: 'JetBrainsMono Nerd Font', 'JetBrainsMono NF', monospace;
+    font-size: 13px;
+    font-weight: normal;
     background: rgba(0, 0, 0, 0.4);
     color: #89b4fa;
     margin: 0 4px;
@@ -171,6 +178,22 @@ button:hover {
 }
 
 #memory {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+#cpu {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+#network {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+#network.disconnected {
+    background-color: #eb4d4b;
+}
+
+#backlight {
     background: rgba(0, 0, 0, 0.4);
 }
 

@@ -2,7 +2,7 @@ require("hyprland/monitor")
 require("hyprland/autostart")
 require("hyprland/input")
 require("hyprland/env_var")
-require("hyprland/programsnkeys")
+require("hyprland/programnkeys")
 require("hyprland/anim")
 
 -----------------------
@@ -82,5 +82,19 @@ hl.window_rule({
     match = { class = "hyprland-run" },
 
     move  = "20 monitor_h-120",
+    float = true,
+})
+
+-- Float KeePassXC
+hl.window_rule({
+    name  = "keepassxc-float",
+    match = { class = "org.keepassxc.KeePassXC" },
+    float = true,
+})
+
+-- Float Pavucontrol
+hl.window_rule({
+    name  = "pavucontrol-float",
+    match = { class = "org.pulseaudio.pavucontrol" },
     float = true,
 })

@@ -1,9 +1,12 @@
 {
     "layer": "top", // Waybar at top layer
     "position": "top",
-    "margin": 2,
+    "margin-top": 10,
+    "margin-left": 10,
+    "margin-right": 10,
     "spacing": 4,
     "modules-left": [
+        "cpu",
         "memory",
         "hyprland/workspaces",
         "hyprland/window"
@@ -15,6 +18,8 @@
     ],
     "modules-right": [
         "pulseaudio",
+        "backlight",
+        "network",
         "temperature",
         "tray",
         "battery",
@@ -22,9 +27,12 @@
         "power-profiles-daemon"
     ],
     "custom/cava": {
-        "exec": "$HOME/.config/waybar/scripts/cava.sh",
+        "exec": "python3 $HOME/.config/waybar/scripts/cava.py waybar --json",
         "format": "{}",
-        "restart-interval": 1
+        "return-type": "json",
+        "hide-empty": true,
+        "restart-interval": 1,
+        "on-click": "pkill -f 'cava.py waybar'"
     },
     "cava": {
         "framerate": 30,
@@ -88,6 +96,23 @@
     "memory": {
         "format": "{}% ",
         "on-click": "kitty -e btop"
+    },
+    "cpu": {
+        "format": "{usage}% ",
+        "tooltip": false,
+        "on-click": "kitty -e btop"
+    },
+    "network": {
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-ethernet": "{ipaddr}/{cidr} ",
+        "tooltip-format": "{ifname} via {gwaddr} ",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "Disconnected ⚠",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+    },
+    "backlight": {
+        "format": "{percent}% {icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
     },
     "custom/media": {
         "format": "{icon} {text}",
