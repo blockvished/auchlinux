@@ -666,8 +666,9 @@ class CavaClient:
                 or (standby_mode == "" and standby_output == "")
             ):
                 if json_output:
+                    text_val = f"{standby_output} <span color='#666666'>|</span> " if standby_output else ""
                     output = {
-                        "text": standby_output,
+                        "text": text_val,
                         "tooltip": "Cava audio visualizer - standby mode",
                     }
                     print(json.dumps(output), flush=True)
@@ -710,8 +711,9 @@ class CavaClient:
                                         line, bar_chars, width, standby_mode
                                     )
                                 if json_output:
+                                    text_val = f"{formatted} <span color='#666666'>|</span> " if formatted else ""
                                     output = {
-                                        "text": formatted,
+                                        "text": text_val,
                                         "tooltip": "Cava audio visualizer - active" if not is_silent else "Cava audio visualizer - idle",
                                     }
                                     print(json.dumps(output), flush=True)

@@ -98,3 +98,10 @@ hl.window_rule({
     match = { class = "org.pulseaudio.pavucontrol" },
     float = true,
 })
+
+-- Float Blueman Manager
+hl.window_rule({
+    name  = "blueman-manager-float",
+    match = { class = "blueman-manager" },
+    float = true,
+})

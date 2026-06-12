@@ -6,16 +6,13 @@
 
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
+hl.env("XCURSOR_THEME", "Bibata-Modern-Ice")
+hl.env("HYPRCURSOR_THEME", "Bibata-Modern-Ice")
+-- Bibata-Modern-Ice
 
 -- #############################
 -- ### ENVIRONMENT VARIABLES ###
 -- #############################
-
--- # See https://wiki.hypr.land/Configuring/Environment-variables/
-
--- env = XCURSOR_SIZE,24
--- env = XCURSOR_THEME,Bibata-Modern-Ice
--- env = HYPRCURSOR_SIZE,24
 -- env = QT_QPA_PLATFORMTHEME,qt6ct
 -- env = WEATHER_LAT,xx.yyyy
 -- env = WEATHER_LON,xx.yyyy

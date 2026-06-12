@@ -9,7 +9,7 @@ configuration {
 @import "~/.config/rofi/colors/onedark.rasi"
 
 * {
-    font: "JetBrainsMono Nerd Font Propo 13";
+    font: "JetBrainsMono Nerd Font Propo 10";
     background-soft: #1f232cff;
 }
 

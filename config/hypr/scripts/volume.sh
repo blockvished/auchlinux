@@ -3,6 +3,8 @@
 set -euo pipefail
 
 step="${VOLUME_STEP:-5%}"
+volume_limit="${VOLUME_LIMIT:-1.3}"
+
 sink="${VOLUME_SINK:-@DEFAULT_AUDIO_SINK@}"
 source="${VOLUME_SOURCE:-@DEFAULT_AUDIO_SOURCE@}"
 notify_id="${VOLUME_NOTIFY_ID:-91190}"
@@ -55,11 +57,13 @@ notify_volume() {
 
 case "${1:-}" in
   up)
+    local_step="${2:-$step}"
     wpctl set-mute "$sink" 0
-    wpctl set-volume -l 1 "$sink" "$step+"
+    wpctl set-volume -l "$volume_limit" "$sink" "${local_step}+"
     ;;
   down)
-    wpctl set-volume "$sink" "$step-"
+    local_step="${2:-$step}"
+    wpctl set-volume "$sink" "${local_step}-"
     ;;
   mute)
     wpctl set-mute "$sink" toggle

@@ -6,24 +6,22 @@
     "margin-right": 10,
     "spacing": 4,
     "modules-left": [
-        "cpu",
-        "memory",
+        "group/sys-group",
         "hyprland/workspaces",
         "hyprland/window"
     ],
     "modules-center": [
-        "custom/cava",
-        "clock",
+        "group/clock-group",
         "custom/media"
     ],
     "modules-right": [
         "pulseaudio",
-        "backlight",
         "network",
         "temperature",
         "tray",
         "battery",
         "custom/nightlight",
+        "custom/screenrecord",
         "power-profiles-daemon"
     ],
     "custom/cava": {
@@ -33,6 +31,14 @@
         "hide-empty": true,
         "restart-interval": 1,
         "on-click": "pkill -f 'cava.py waybar'"
+    },
+    "custom/screenrecord": {
+        "exec": "pgrep -x wf-recorder >/dev/null && echo '{\"text\":\"󰻂\",\"class\":\"recording\",\"tooltip\":\"Screen Recording Active\"}' || echo '{\"text\":\"\",\"class\":\"\",\"tooltip\":\"\"}'",
+        "interval": 2,
+        "signal": 9,
+        "return-type": "json",
+        "hide-empty": true,
+        "on-click": "pkill -INT -x wf-recorder"
     },
     "cava": {
         "framerate": 30,
@@ -78,7 +84,23 @@
         "offscreen-css": true,
         "offscreen-css-text": "(inactive)"
     },
+    "group/sys-group": {
+        "orientation": "horizontal",
+        "modules": [
+            "cpu",
+            "memory"
+        ]
+    },
+    "group/clock-group": {
+        "orientation": "horizontal",
+        "modules": [
+            "custom/cava",
+            "clock",
+            "idle_inhibitor"
+        ]
+    },
     "clock": {
+        "format": "{:%H:%M}",
         "format-alt": "{:%A, %B %d, %Y}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
@@ -93,12 +115,19 @@
             }
         }
     },
+    "idle_inhibitor": {
+        "format": " <span color='#666666'>|</span> {icon} ",
+        "format-icons": {
+            "activated": "󰈈",
+            "deactivated": "󰈉"
+        }
+    },
     "memory": {
-        "format": "{}% ",
+        "format": " {}% ",
         "on-click": "kitty -e btop"
     },
     "cpu": {
-        "format": "{usage}% ",
+        "format": "{usage}%  <span color='#666666'>|</span>",
         "tooltip": false,
         "on-click": "kitty -e btop"
     },

@@ -1,6 +1,6 @@
 * {
     font-family: 'JetBrainsMono Nerd Font', 'Radio Canada Big', sans-serif;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: bold;
     /* border-radius: 4px; */
 }
@@ -69,10 +69,7 @@ button:hover {
     min-width: 20px;
 }
 
-#clock,
 #battery,
-#memory,
-#cpu,
 #temperature,
 #pulseaudio,
 #backlight,
@@ -80,10 +77,10 @@ button:hover {
 #wireplumber,
 #custom-media,
 #custom-nightlight,
+#custom-screenrecord,
 #tray,
 #mode,
 #hyprland-window,
-#idle_inhibitor,
 #scratchpad,
 #power-profiles-daemon,
 #window {    
@@ -97,7 +94,7 @@ button:hover {
 
 #custom-cava {
     font-family: 'JetBrainsMono Nerd Font', 'JetBrainsMono NF', monospace;
-    font-size: 13px;
+    font-size: 10px;
     font-weight: normal;
     background: rgba(0, 0, 0, 0.4);
     color: #89b4fa;
@@ -117,9 +114,70 @@ button:hover {
     margin-right: 0;
 }
 
-#clock {
+.clock-group,
+#clock-group {
     background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    box-shadow: inset 0 -2px #a6bbda;
+    margin: 0 4px;
+    padding-left: 13px;
+    padding-right: 10px;
 }
+
+.clock-group #clock,
+#clock-group #clock {
+    background-color: transparent;
+    background-image: none;
+    border-radius: 0;
+    box-shadow: none;
+    box-shadow: inset 0 0 transparent;
+    margin: 0;
+    padding: 0;
+}
+
+.clock-group #custom-cava,
+#clock-group #custom-cava {
+    background-color: transparent;
+    background-image: none;
+    border-radius: 0;
+    box-shadow: none;
+    box-shadow: inset 0 0 transparent;
+    margin: 0;
+    padding: 0;
+}
+
+.sys-group,
+#sys-group {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    box-shadow: inset 0 -2px #a6bbda;
+    margin: 0 4px;
+    padding-left: 13px;
+    padding-right: 13px;
+}
+
+.sys-group #cpu,
+#sys-group #cpu {
+    background-color: transparent;
+    background-image: none;
+    border-radius: 0;
+    box-shadow: none;
+    box-shadow: inset 0 0 transparent;
+    margin: 0;
+    padding: 0;
+}
+
+.sys-group #memory,
+#sys-group #memory {
+    background-color: transparent;
+    background-image: none;
+    border-radius: 0;
+    box-shadow: none;
+    box-shadow: inset 0 0 transparent;
+    margin: 0;
+    padding: 0;
+}
+
 
 #battery {
     background: rgba(0, 0, 0, 0.4);
@@ -177,13 +235,7 @@ button:hover {
     background: rgba(0, 0, 0, 0.4);
 }
 
-#memory {
-    background: rgba(0, 0, 0, 0.4);
-}
 
-#cpu {
-    background: rgba(0, 0, 0, 0.4);
-}
 
 #network {
     background: rgba(0, 0, 0, 0.4);
@@ -279,13 +331,24 @@ label:focus {
     background-color: #eb4d4b;
 }
 
-#idle_inhibitor {
-    background-color: #2d3436;
+.clock-group #idle_inhibitor,
+#clock-group #idle_inhibitor {
+    background-color: transparent;
+    background-image: none;
+    border-radius: 0;
+    box-shadow: none;
+    box-shadow: inset 0 0 transparent;
+    margin: 0;
+    padding: 0;
 }
 
-#idle_inhibitor.activated {
-    background-color: #ecf0f1;
-    color: #2d3436;
+.clock-group #idle_inhibitor.activated,
+#clock-group #idle_inhibitor.activated {
+    background-color: transparent;
+    background-image: none;
+    box-shadow: none;
+    box-shadow: inset 0 0 transparent;
+    color: #a6e3a1;
 }
 
 #mpd {
@@ -333,3 +396,20 @@ label:focus {
 #privacy-item.audio-out {
     background-color: #0069d4;
 } */
+
+#custom-screenrecord {
+    background: rgba(235, 77, 75, 0.3);
+    color: #ff5252;
+    animation: pulse-recording 1.5s infinite alternate;
+}
+
+@keyframes pulse-recording {
+    from {
+        box-shadow: inset 0 -2px #ff5252;
+        background: rgba(235, 77, 75, 0.25);
+    }
+    to {
+        box-shadow: inset 0 -2px #ff5252, 0 0 8px rgba(255, 82, 82, 0.6);
+        background: rgba(235, 77, 75, 0.55);
+    }
+}

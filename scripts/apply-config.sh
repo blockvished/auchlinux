@@ -9,7 +9,7 @@ BACKUP_SUFFIX=".bak-$(date +'%y%m%d-%H%M%S')"
 
 echo "==== Applying configurations from repository to ~/.config ===="
 
-# Folders to sync
+# Folders to sync (will overwrite destination completely after backup)
 FOLDERS=(
   "cava"
   "dunst"
@@ -24,7 +24,12 @@ FOLDERS=(
   "xfce4"
 )
 
-# Sync each folder
+# Folders to merge (will copy files recursively without wiping the target folder)
+MERGE_FOLDERS=(
+  "Code - OSS"
+)
+
+# Sync each standard folder
 for folder in "${FOLDERS[@]}"; do
   SRC="$REPO_CONFIG_DIR/$folder"
   DST="$TARGET_DIR/$folder"
@@ -44,6 +49,20 @@ for folder in "${FOLDERS[@]}"; do
     cp -r "$SRC" "$DST"
   else
     echo "[Skip] Folder $folder does not exist in repository config."
+  fi
+done
+
+# Merge each merge-folder
+for folder in "${MERGE_FOLDERS[@]}"; do
+  SRC="$REPO_CONFIG_DIR/$folder"
+  DST="$TARGET_DIR/$folder"
+  
+  if [ -d "$SRC" ]; then
+    echo "[Sync-Merge] Merging $folder into ~/.config/..."
+    mkdir -p "$DST"
+    cp -r "$SRC"/. "$DST"/
+  else
+    echo "[Skip] Merge folder $folder does not exist in repository config."
   fi
 done
 
