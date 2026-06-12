@@ -27,13 +27,20 @@ DEFAULT_LUKS_PASSPHRASE="passphrasing"
 
 ESP_SIZE="512MiB"
 
+# Detect CPU Microcode
+CPU_VENDOR=$(grep -m1 'vendor_id' /proc/cpuinfo 2>/dev/null | awk '{print $3}' || echo "")
+UCODE="amd-ucode" # Default fallback
+if [[ "$CPU_VENDOR" == "GenuineIntel" ]]; then
+  UCODE="intel-ucode"
+fi
+
 # ✅ ONLY zen kernel installed
 PKGS=(
   base linux-zen linux-firmware
   sudo git nvim nano
   networkmanager bash-completion
   efibootmgr dosfstools cryptsetup
-  amd-ucode
+  "$UCODE"
 )
 
 # ============================
@@ -315,15 +322,15 @@ EOF
 cat > /mnt/boot/loader/entries/arch-zen.conf <<EOF
 title   Arch Linux (Zen)
 linux   /vmlinuz-linux-zen
-initrd  /amd-ucode.img
+initrd  /$UCODE.img
 initrd  /initramfs-linux-zen.img
 options rd.luks.name=$LUKS_UUID=cryptroot root=UUID=$ROOT_UUID rw
 EOF
 
-# amd ucode fallback
-if [[ ! -f /mnt/boot/amd-ucode.img ]]; then
-  warn "amd-ucode.img not found → removing it from entry"
-  sed -i '/amd-ucode.img/d' /mnt/boot/loader/entries/arch-zen.conf
+# ucode fallback
+if [[ ! -f "/mnt/boot/$UCODE.img" ]]; then
+  warn "$UCODE.img not found → removing it from entry"
+  sed -i "/$UCODE.img/d" /mnt/boot/loader/entries/arch-zen.conf
 fi
 
 # ============================
