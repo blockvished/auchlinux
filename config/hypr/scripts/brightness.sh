@@ -20,10 +20,10 @@ brightness_percent() {
 
 case "${1:-}" in
   up)
-    brightnessctl -e4 -n2 set "$step+"
+    brightnessctl -n2 set "$step+"
     ;;
   down)
-    brightnessctl -e4 -n2 set "$step-"
+    brightnessctl -n2 set "$step-"
     ;;
   *)
     printf 'Usage: %s {up|down}\n' "$0" >&2

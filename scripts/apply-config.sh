@@ -20,6 +20,7 @@ FOLDERS=(
   "kitty"
   "nwg-look"
   "rofi"
+  "swaync"
   "waybar"
   "xfce4"
 )
@@ -81,9 +82,14 @@ if pgrep -x "Hyprland" > /dev/null; then
     pkill -u "$USER" -USR2 waybar || pkill -u "$USER" waybar && waybar &
   fi
   
-  # Restart Dunst notification daemon using systemd
-  echo "[Reload] Restarting Dunst notification daemon..."
-  systemctl --user restart dunst || systemctl --user start dunst || true
+  # Restart notification daemon
+  if command -v swaync >/dev/null 2>&1; then
+    echo "[Reload] Restarting SwayNC notification daemon..."
+    systemctl --user restart swaync || (pkill -x swaync || true && swaync &)
+  else
+    echo "[Reload] Restarting Dunst notification daemon..."
+    systemctl --user restart dunst || systemctl --user start dunst || true
+  fi
 fi
 
 echo "==== Configurations successfully applied! ===="

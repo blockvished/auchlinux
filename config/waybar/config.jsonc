@@ -11,8 +11,8 @@
         "hyprland/window"
     ],
     "modules-center": [
-        "group/clock-group",
-        "custom/media"
+        "group/clock-group"
+        // "custom/media"
     ],
     "modules-right": [
         "pulseaudio",
@@ -96,7 +96,8 @@
         "modules": [
             "custom/cava",
             "clock",
-            "idle_inhibitor"
+            "idle_inhibitor",
+            "custom/notification"
         ]
     },
     "clock": {
@@ -121,6 +122,26 @@
             "activated": "󰈈",
             "deactivated": "󰈉"
         }
+    },
+    "custom/notification": {
+        "tooltip": false,
+        "format": " <span color='#666666'>|</span> {icon} ",
+        "format-icons": {
+            "notification": "<span color='#f38ba8'><sup></sup></span>",
+            "none": "",
+            "dnd-notification": "<span color='#f38ba8'><sup></sup></span>",
+            "dnd-none": "",
+            "inhibited-notification": "<span color='#f38ba8'><sup></sup></span>",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "<span color='#f38ba8'><sup></sup></span>",
+            "dnd-inhibited-none": ""
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
     },
     "memory": {
         "format": " {}% ",
@@ -152,8 +173,8 @@
             "default": "🎜"
         },
         "escape": true,
-        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
-        // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+        "exec": "$HOME/.config/waybar/scripts/mediaplayer.py 2> /dev/null" // Script in resources folder
+        // "exec": "$HOME/.config/waybar/scripts/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
