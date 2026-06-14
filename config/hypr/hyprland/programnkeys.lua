@@ -39,6 +39,7 @@ hl.bind(mainMod .. " + ALT + G",       hl.dsp.exec_cmd("~/.config/hypr/scripts/n
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/wallpaper-picker.sh"))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("pypr toggle console"))
+hl.bind(mainMod .. " + ALT + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/rofi-web-search.sh"))
 -- Toggle Game Mode
 local function toggle_gamemode()
     local anims = hl.get_config("animations.enabled")
