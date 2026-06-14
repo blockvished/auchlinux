@@ -15,7 +15,7 @@ hl.on("hyprland.start", function()
     
     -- Start daemons without systemd units directly
     hl.exec_cmd("awww-daemon")
-    hl.exec_cmd("nm-applet --indicator")
+    hl.exec_cmd("pgrep -x nm-applet >/dev/null || nm-applet --indicator")
     hl.exec_cmd("~/.config/hypr/scripts/clipboard-watch.sh")
     hl.exec_cmd("pypr")
 end)
