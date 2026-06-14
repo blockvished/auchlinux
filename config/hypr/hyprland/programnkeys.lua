@@ -39,6 +39,8 @@ hl.bind(mainMod .. " + ALT + G",       hl.dsp.exec_cmd("~/.config/hypr/scripts/n
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/wallpaper-picker.sh"))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("pypr toggle console"))
+hl.bind(mainMod .. " + SHIFT + P", hl.dsp.window.pin())
+hl.bind(mainMod .. " + CTRL + Escape", hl.dsp.exec_cmd("kitty --class sysmon-float -o remember_window_size=no -o initial_window_width=1024 -o initial_window_height=768 -e btop"))
 hl.bind(mainMod .. " + ALT + T", luafunctions.toggle_zsh_theme)
 hl.bind(mainMod .. " + SHIFT + T", luafunctions.toggle_zsh_theme)
 hl.bind(mainMod .. " + ALT + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/rofi-web-search.sh"))

@@ -21,9 +21,11 @@ FOLDERS=(
   "nwg-look"
   "pypr"
   "rofi"
+  "starship"
   "swaync"
   "waybar"
   "xfce4"
+  "zsh"
 )
 
 # Folders to merge (will copy files recursively without wiping the target folder)

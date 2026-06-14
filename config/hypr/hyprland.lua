@@ -115,3 +115,12 @@ hl.window_rule({
     float = true,
 })
 
+-- Float System Monitor
+hl.window_rule({
+    name  = "sysmon-float",
+    match = { class = "sysmon-float" },
+    float = true,
+    size  = "1000 650",
+    center = true,
+})
+
