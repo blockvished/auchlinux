@@ -35,7 +35,13 @@ case "$choice" in
     systemctl suspend
     ;;
   "󰍃  Logout")
-    confirm "Logout" && hyprctl dispatch exit
+    if confirm "Logout"; then
+      if command -v uwsm >/dev/null 2>&1 && uwsm check is-active; then
+        uwsm stop
+      else
+        hyprctl dispatch exit
+      fi
+    fi
     ;;
   "󰜉  Restart")
     confirm "Restart" && systemctl reboot

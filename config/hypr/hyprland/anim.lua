@@ -3,6 +3,8 @@
 -----------------------
 
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
+local colors = require("hyprland/colors")
+
 hl.config({
     general = {
         gaps_in  = 5,
@@ -11,8 +13,8 @@ hl.config({
         border_size = 2,
 
         col = {
-            active_border   = { colors = {"rgba(00f2feee)", "rgba(4facfeee)"}, angle = 45 },
-            inactive_border = "rgba(33ccff33)",
+            active_border   = { colors = {colors.primary, colors.secondary}, angle = 45 },
+            inactive_border = colors.inactive,
         },
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps

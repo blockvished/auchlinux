@@ -4,21 +4,18 @@
 
 -- See https://wiki.hypr.land/Configuring/Basics/Autostart/
 
--- Autostart necessary processes (like notifications daemons, status bars, etc.)
--- Or execute your favorite apps at launch like this:
---
--- hl.on("hyprland.start", function () 
---   hl.exec_cmd(terminal)
---   hl.exec_cmd("nm-applet")
---   hl.exec_cmd("waybar & hyprpaper & firefox")
--- end)
-
-
 hl.on("hyprland.start", function()
-    hl.exec_cmd("waybar")
+    -- Import display environment variables into systemd
+    hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP DISPLAY")
+    
+    -- Start services via systemd user units
+    hl.exec_cmd("systemctl --user start waybar")
+    hl.exec_cmd("systemctl --user start hypridle")
+    hl.exec_cmd("command -v swaync >/dev/null 2>&1 && systemctl --user start swaync || systemctl --user start dunst")
+    
+    -- Start daemons without systemd units directly
     hl.exec_cmd("awww-daemon")
-    hl.exec_cmd("command -v swaync >/dev/null 2>&1 && swaync || command -v dunst >/dev/null 2>&1 && dunst")
     hl.exec_cmd("nm-applet --indicator")
-    hl.exec_cmd("hypridle")
     hl.exec_cmd("~/.config/hypr/scripts/clipboard-watch.sh")
+    hl.exec_cmd("pypr")
 end)

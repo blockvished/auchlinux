@@ -1,3 +1,5 @@
+@import "colors.css";
+
 * {
     font-family: 'JetBrainsMono Nerd Font', 'Radio Canada Big', sans-serif;
     font-size: 10px;
@@ -7,7 +9,7 @@
 
 window#waybar {
     background-color: transparent;
-    color: #e8eaed;
+    color: @text;
     /* mix-blend-mode: difference; */
     background-color: rgba(0, 0, 0, 0.1);
     transition-property: background-color;
@@ -30,7 +32,7 @@ button {
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
 button:hover {
     background: inherit;
-    box-shadow: inset 0 -3px #e8eaed;
+    box-shadow: inset 0 -3px @text;
 }
 
 #workspaces {
@@ -42,30 +44,30 @@ button:hover {
     margin: 0 4px;
     padding: 0 5px;
     background-color: transparent;
-    background: rgba(0, 0, 0, 0.5);
+    background: @background-dark;
     border-radius: 20px;
     transition: all 200ms ease-in-out;
-    color: #7f849c;
+    color: @text-muted;
 }
 
 #workspaces button:not(.empty) {
     /* A soft highlight color for workspaces with apps */
-    color: #f5e0dc; 
-    background: rgba(0, 0, 0, 0.5);
+    color: @highlight; 
+    background: @background-dark;
     /* Add a small blue underline for occupied ones */
-    box-shadow: inset 0 -3px #89b4fa; 
+    box-shadow: inset 0 -3px @primary; 
 }
 
 #workspaces button:hover {
     background: rgba(255, 255, 255, 0.1);
-    color: #e8eaed;
+    color: @text;
     border-radius: 20px;
 }
 
 #workspaces button.active {
-    color: #e8eaed;
-    background: rgba(0, 0, 0, 0.3);
-    box-shadow: inset 0 -3px #e8eaed;
+    color: @text;
+    background: @background-light;
+    box-shadow: inset 0 -3px @text;
     min-width: 20px;
 }
 
@@ -86,9 +88,9 @@ button:hover {
 #window {    
     margin: 0 4px;
     padding: 0 13px;
-    color: #e8eaed;
+    color: @text;
     border-radius: 8px;
-    box-shadow: inset 0 -2px #a6bbda;
+    box-shadow: inset 0 -2px @secondary;
 
 }
 
@@ -96,12 +98,12 @@ button:hover {
     font-family: 'JetBrainsMono Nerd Font', 'JetBrainsMono NF', monospace;
     font-size: 10px;
     font-weight: normal;
-    background: rgba(0, 0, 0, 0.4);
-    color: #89b4fa;
+    background: @background-medium;
+    color: @primary;
     margin: 0 4px;
     padding: 0 10px;
     border-radius: 8px;
-    box-shadow: inset 0 -2px #a6bbda;
+    box-shadow: inset 0 -2px @secondary;
 }
 
 /* If workspaces is the leftmost module, omit left margin */

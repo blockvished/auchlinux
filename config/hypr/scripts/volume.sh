@@ -42,16 +42,18 @@ notify_volume() {
   local message="${volume}%"
 
   if is_muted; then
-    icon=""
+    icon="󰝟"
     message="Muted"
   elif (( volume == 0 )); then
-    icon=""
+    icon=""
   elif (( volume < 50 )); then
-    icon=""
+    icon=""
   elif (( volume > 100 )); then
     # Overdrive mode — warn visually
-    icon=""
+    icon=""
     message="${volume}% ⚠ Overdrive"
+  else
+    icon=""
   fi
 
   notify-send \
@@ -116,6 +118,10 @@ case "${1:-}" in
     wpctl set-mute "$source" toggle
     muted="$(wpctl get-volume "$source" | grep -q MUTED && printf Muted || printf Unmuted)"
     has notify-send || exit 0
+    local mic_icon="󰍬"
+    if [[ "$muted" == "Muted" ]]; then
+      mic_icon="󰍭"
+    fi
     notify-send \
       -a "Microphone" \
       -r "$mic_notify_id" \
@@ -124,7 +130,7 @@ case "${1:-}" in
       -e \
       -h "string:x-canonical-private-synchronous:microphone" \
       -h "string:x-dunst-stack-tag:microphone" \
-      "  Microphone" "$muted"
+      "$mic_icon  Microphone" "$muted"
     exit 0
     ;;
   status)

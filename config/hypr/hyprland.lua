@@ -4,6 +4,7 @@ require("hyprland/input")
 require("hyprland/env_var")
 require("hyprland/programnkeys")
 require("hyprland/anim")
+require("hyprland/plugins")
 
 -----------------------
 ----- PERMISSIONS -----
@@ -105,3 +106,11 @@ hl.window_rule({
     match = { class = "blueman-manager" },
     float = true,
 })
+
+-- Float Pyprland Dropdown Scratchpad
+hl.window_rule({
+    name  = "pyprland-scratchpad",
+    match = { class = "console-dropdown" },
+    float = true,
+})
+
