@@ -40,43 +40,8 @@ hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/wallpaper-picker.sh"))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("pypr toggle console"))
 hl.bind(mainMod .. " + ALT + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/rofi-web-search.sh"))
--- Toggle Game Mode
-local function toggle_gamemode()
-    local anims = hl.get_config("animations.enabled")
-    if anims then
-        hl.config({
-            animations = { enabled = false },
-            general = {
-                gaps_in = 2,
-                gaps_out = 2,
-                border_size = 1
-            },
-            decoration = {
-                shadow = { enabled = false },
-                blur = { enabled = false },
-                rounding = 0
-            }
-        })
-        hl.dsp.exec_cmd("notify-send -a 'Game Mode' -i 'dialog-information' -u low 'Game Mode' 'Performance Mode Enabled (Effects, Gaps & Borders Reduced)'")
-    else
-        hl.config({
-            animations = { enabled = true },
-            general = {
-                gaps_in = 5,
-                gaps_out = 10,
-                border_size = 2
-            },
-            decoration = {
-                shadow = { enabled = true },
-                blur = { enabled = true },
-                rounding = 10
-            }
-        })
-        hl.dsp.exec_cmd("notify-send -a 'Game Mode' -i 'dialog-information' -u low 'Game Mode' 'Aesthetic Mode Restored'")
-    end
-end
-
-hl.bind(mainMod .. " + G", toggle_gamemode)
+-- Toggle Game Mode (custom Lua script)
+hl.bind(mainMod .. " + G", luascripts.toggle_gamemode)
 hl.bind(mainMod .. " + comma", hl.dsp.exec_cmd("~/.config/hypr/scripts/glyph-picker.sh"))
 hl.bind(mainMod .. " + period", hl.dsp.exec_cmd("~/.config/hypr/scripts/emoji-picker.sh"))
 hl.bind(mainMod .. " + slash", hl.dsp.exec_cmd("python3 ~/.config/hypr/scripts/keybindings-hint.py"))
@@ -138,6 +103,7 @@ hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("~/.config/hypr/scripts/volume.s
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("~/.config/hypr/scripts/volume.sh down"),     { locked = true, repeating = true })
 hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("~/.config/hypr/scripts/volume.sh mute"),     { locked = true, repeating = true })
 hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("~/.config/hypr/scripts/volume.sh mic-mute"), { locked = true, repeating = true })
+hl.bind(mainMod .. " + CTRL + M", hl.dsp.exec_cmd("~/.config/hypr/scripts/mute-window.sh"))
 hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("~/.config/hypr/scripts/brightness.sh up"),   { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("~/.config/hypr/scripts/brightness.sh down"), { locked = true, repeating = true })
 hl.bind(mainMod .. " + SHIFT + F1", hl.dsp.exec_cmd("~/.config/hypr/scripts/brightness.sh min"), { locked = true })
