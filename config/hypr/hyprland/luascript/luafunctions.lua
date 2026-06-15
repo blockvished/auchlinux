@@ -177,27 +177,29 @@ END {
     end
 end
 
--- Toggle Zsh Theme Mode (HyDE vs End4 Setup)
+-- Toggle Zsh Theme Mode (Lol vs Newpr Setup)
 function M.toggle_zsh_theme()
     local mode_file = os.getenv("HOME") .. "/.config/zsh/zsh_theme_mode"
     
     -- Read current mode
-    local current_mode = "hyde"
+    local current_mode = "lol"
     local f = io.open(mode_file, "r")
     if f then
-        current_mode = f:read("*l") or "hyde"
+        current_mode = f:read("*l") or "lol"
         f:close()
     end
     
-    -- Toggle mode
-    local new_mode = "hyde"
-    local friendly_name = "HyDE (Pokemon / Classic)"
+    -- Cycle through 4 modes: lol → newpr → onmeds → end4 → lol
+    local cycle = { lol = "newpr", newpr = "onmeds", onmeds = "end4", end4 = "lol" }
+    local labels = {
+        lol    = "Lol (Pokemon / Classic)",
+        newpr  = "Newpr (Fastfetch / Minimalist)",
+        onmeds = "Onmeds (Powerline / Compact)",
+        end4   = "End4 (End4 Black layout)",
+    }
+    local new_mode = cycle[current_mode] or "lol"
+    local friendly_name = labels[new_mode] or new_mode
     local icon = "dialog-information"
-    
-    if current_mode == "hyde" then
-        new_mode = "end4"
-        friendly_name = "End4 (Fastfetch / Minimalist)"
-    end
     
     -- Write new mode
     f = io.open(mode_file, "w")
@@ -206,8 +208,34 @@ function M.toggle_zsh_theme()
         f:close()
     end
     
+    local home = os.getenv("HOME")
+
+    -- Copy corresponding Kitty theme configuration (fallback to lol if not found)
+    local kitty_src = home .. "/.config/kitty/kitty_" .. new_mode .. ".conf"
+    local kitty_dst = home .. "/.config/kitty/kitty_theme.conf"
+    local kitty_fallback = home .. "/.config/kitty/kitty_lol.conf"
+    os.execute("cp '" .. kitty_src .. "' '" .. kitty_dst .. "' 2>/dev/null || cp '" .. kitty_fallback .. "' '" .. kitty_dst .. "'")
+    
+    -- Update the active starship config symlink
+    local starship_src = home .. "/.config/starship/starship_" .. new_mode .. ".toml"
+    local starship_dst = home .. "/.config/starship/starship.toml"
+    os.execute("ln -sf '" .. starship_src .. "' '" .. starship_dst .. "' 2>/dev/null || true")
+
+    -- Update the active fastfetch config symlink
+    local fastfetch_src = home .. "/.config/fastfetch/config_" .. new_mode .. ".jsonc"
+    local fastfetch_dst = home .. "/.config/fastfetch/config.jsonc"
+    os.execute("ln -sf '" .. fastfetch_src .. "' '" .. fastfetch_dst .. "' 2>/dev/null || true")
+
+    -- Reload all active Kitty windows on-the-fly
+    os.execute("pkill -USR1 kitty || true")
+    
     -- Trigger desktop notification
     hl.dsp.exec_cmd("notify-send -a 'Zsh Theme' -i '" .. icon .. "' 'Zsh Theme Toggle' 'Switched to " .. friendly_name .. "'")
+end
+
+-- Toggle Rofi Theme Mode (cycles dynamically using Zsh helper)
+function M.toggle_rofi_theme()
+    os.execute("zsh -c 'source ~/.config/zsh/.zshrc; rofi-theme cycle' 2>/dev/null || true")
 end
 
 -- Expose globally for convenience in other modules

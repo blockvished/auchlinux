@@ -83,7 +83,18 @@ for folder in "${FOLDERS[@]}"; do
     
     echo "[Sync] Syncing $folder to ~/.config/..."
     mkdir -p "$DST"
-    rsync --archive --delete "$SRC/" "$DST/"
+    # Build per-folder exclude list to protect runtime-installed dirs not tracked in repo
+    RSYNC_EXCLUDES=()
+    if [[ "$folder" == "zsh" ]]; then
+      RSYNC_EXCLUDES+=("--exclude=ohmyzsh/")       # installed by term-n-font.sh
+      RSYNC_EXCLUDES+=("--exclude=.zcompdump*")    # zsh completion cache
+      RSYNC_EXCLUDES+=("--exclude=.zsh_history")   # shell history
+      RSYNC_EXCLUDES+=("--exclude=.zsh_sessions/") # zsh session files
+    elif [[ "$folder" == "rofi" ]]; then
+      RSYNC_EXCLUDES+=("--exclude=launcher/style.rasi")       # managed by rofi-theme
+      RSYNC_EXCLUDES+=("--exclude=launcher/rofi_theme_mode")  # active theme state
+    fi
+    rsync --archive --delete "${RSYNC_EXCLUDES[@]}" "$SRC/" "$DST/"
   else
     echo "[Skip] Folder $folder does not exist in repository config."
   fi

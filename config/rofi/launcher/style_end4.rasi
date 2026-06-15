@@ -1,0 +1,166 @@
+/**
+ * Sleek Left Side Dock Theme (end4)
+ * Sidebar panel layout docked to the left edge of the screen
+ **/
+
+configuration {
+    modi:                       "drun,run";
+    show-icons:                 true;
+    display-drun:               " Apps";
+    display-run:                " Run";
+    drun-display-format:        "{name}";
+}
+
+@import                          "shared/colors.rasi"
+@import                          "shared/fonts.rasi"
+
+* {
+    /* Sleek minimalist borders */
+    border-colour:               #a6e3a1ff;
+    handle-colour:               #a6e3a1ff;
+    background-colour:           #11111be6;
+    foreground-colour:           #cdd6f4ff;
+    alternate-background:        #18182599;
+    selected-normal-background:  #a6e3a1ff;
+    selected-normal-foreground:  #11111bff;
+}
+
+window {
+    transparency:                "real";
+    location:                    west;       /* Docked to the left */
+    anchor:                      west;
+    fullscreen:                  false;
+    width:                       400px;
+    height:                      95%;        /* Almost full height */
+    x-offset:                    15px;
+    y-offset:                    0px;
+    enabled:                     true;
+    margin:                      0px;
+    padding:                     0px;
+    border:                      1.5px solid;
+    border-radius:               16px;
+    border-color:                rgba(255, 255, 255, 0.08);
+    cursor:                      "default";
+    background-color:            @background-colour;
+}
+
+mainbox {
+    enabled:                     true;
+    spacing:                     15px;
+    margin:                      0px;
+    padding:                     25px 20px;
+    border:                      0px;
+    background-color:            transparent;
+    children:                    [ "inputbar", "listview", "mode-switcher" ];
+}
+
+inputbar {
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     12px 14px;
+    border:                      1px solid;
+    border-radius:               10px;
+    border-color:                rgba(255, 255, 255, 0.05);
+    background-color:            @alternate-background;
+    text-color:                  @foreground-colour;
+    children:                    [ "textbox-prompt-colon", "entry" ];
+}
+
+textbox-prompt-colon {
+    enabled:                     true;
+    expand:                      false;
+    str:                         "";
+    background-color:            transparent;
+    text-color:                  #a6e3a1ff;
+    vertical-align:              0.5;
+}
+
+entry {
+    enabled:                     true;
+    background-color:            transparent;
+    text-color:                  inherit;
+    cursor:                      text;
+    placeholder:                 "Search...";
+    placeholder-color:           #585b70ff;
+    vertical-align:              0.5;
+}
+
+listview {
+    enabled:                     true;
+    columns:                     1;
+    lines:                       10;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                false;
+    fixed-columns:               true;
+    spacing:                     6px;
+    margin:                      0px;
+    padding:                     0px;
+    border:                      0px;
+    background-color:            transparent;
+    text-color:                  @foreground-colour;
+    cursor:                      "default";
+}
+
+element {
+    enabled:                     true;
+    spacing:                     12px;
+    margin:                      0px;
+    padding:                     10px 12px;
+    border:                      0px;
+    border-radius:               10px;
+    background-color:            transparent;
+    text-color:                  @foreground-colour;
+    cursor:                      pointer;
+}
+
+element normal.normal {
+    background-color:            transparent;
+    text-color:                  @foreground-colour;
+}
+
+element selected.normal {
+    background-color:            @selected-normal-background;
+    text-color:                  @selected-normal-foreground;
+}
+
+element-icon {
+    background-color:            transparent;
+    text-color:                  inherit;
+    size:                        28px;
+    cursor:                      inherit;
+}
+
+element-text {
+    background-color:            transparent;
+    text-color:                  inherit;
+    vertical-align:              0.5;
+}
+
+mode-switcher {
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     0px;
+    background-color:            transparent;
+}
+
+button {
+    padding:                     10px;
+    border:                      0px;
+    border-radius:               8px;
+    background-color:            @alternate-background;
+    text-color:                  @foreground-colour;
+    cursor:                      pointer;
+    vertical-align:              0.5;
+    horizontal-align:            0.5;
+}
+
+button selected {
+    background-color:            @selected-normal-background;
+    text-color:                  @selected-normal-foreground;
+}

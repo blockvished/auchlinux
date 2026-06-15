@@ -12,7 +12,7 @@ favorites_file="$HOME/.cache/cliphist_favorites"
 
 "$watcher"
 
-# Generate wallpaper blur and quad caches dynamically for Rofi theme styling
+# Generate wallpaper blur, quad, sqre and thmb caches dynamically for Rofi theme styling
 hyde_cache="$HOME/.cache/hyde"
 current_wall="$(cat "$HOME/.cache/current_wallpaper" 2>/dev/null)"
 if [[ -f "$current_wall" ]]; then
@@ -20,15 +20,16 @@ if [[ -f "$current_wall" ]]; then
   blur_file="$hyde_cache/wall.blur"
   quad_file="$hyde_cache/wall.quad"
   sqre_file="$hyde_cache/wall.sqre"
+  thmb_file="$hyde_cache/wall.thmb"
 
   # If cached files do not exist, or the wallpaper has updated, regenerate
   if [[ ! -f "$blur_file" || "$current_wall" -nt "$blur_file" ]]; then
     magick "$current_wall"[0] -strip -scale 10% -blur 0x3 -resize 100% "$blur_file"
   fi
-  if [[ ! -f "$quad_file" || "$current_wall" -nt "$quad_file" ]]; then
+  if [[ ! -f "$quad_file" || "$current_wall" -nt "$quad_file" || ! -f "$sqre_file" || "$current_wall" -nt "$sqre_file" || ! -f "$thmb_file" || "$current_wall" -nt "$thmb_file" ]]; then
     magick "$current_wall"[0] -strip -thumbnail 500x500^ -gravity center -extent 500x500 "$sqre_file"
     magick "$sqre_file" \( -size 500x500 xc:white -fill "rgba(0,0,0,0.7)" -draw "polygon 400,500 500,500 500,0 450,0" -fill black -draw "polygon 500,500 500,0 450,500" \) -alpha Off -compose CopyOpacity -composite "$quad_file"
-    rm -f "$sqre_file"
+    magick "$current_wall"[0] -strip -resize 1000x "$thmb_file"
   fi
 fi
 

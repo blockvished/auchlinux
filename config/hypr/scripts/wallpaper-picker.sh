@@ -60,16 +60,17 @@ if command -v matugen >/dev/null 2>&1; then
   ) &
 fi
 
-# Generate wallpaper blur and quad caches dynamically for Rofi theme styling
+# Generate wallpaper blur, quad, sqre and thmb caches dynamically for Rofi theme styling
 (
   hyde_cache="$HOME/.cache/hyde"
   mkdir -p "$hyde_cache"
   blur_file="$hyde_cache/wall.blur"
   quad_file="$hyde_cache/wall.quad"
   sqre_file="$hyde_cache/wall.sqre"
+  thmb_file="$hyde_cache/wall.thmb"
 
   magick "$wallpaper"[0] -strip -scale 10% -blur 0x3 -resize 100% "$blur_file"
   magick "$wallpaper"[0] -strip -thumbnail 500x500^ -gravity center -extent 500x500 "$sqre_file"
   magick "$sqre_file" \( -size 500x500 xc:white -fill "rgba(0,0,0,0.7)" -draw "polygon 400,500 500,500 500,0 450,0" -fill black -draw "polygon 500,500 500,0 450,500" \) -alpha Off -compose CopyOpacity -composite "$quad_file"
-  rm -f "$sqre_file"
+  magick "$wallpaper"[0] -strip -resize 1000x "$thmb_file"
 ) &
