@@ -133,6 +133,7 @@ element {
     text-color:                  @main-fg;
 }
 element selected.normal {
+    border-radius:               10 px;
     background-color:            @select-bg;
     text-color:                  @select-fg;
 }
