@@ -37,6 +37,7 @@ window {
     spacing:                     0em;
     padding:                     0em;
     border-width:                2px;
+    border-radius:               1.5em;
     border-color:                @main-br;
     background-color:            @main-bg;
 }
