@@ -95,6 +95,17 @@ select_cursor() {
     fi
 }
 
+if [ "$1" == "cursor" ]; then
+    select_cursor
+    exit 0
+elif [ "$1" == "gtk" ]; then
+    select_gtk
+    exit 0
+elif [ "$1" == "icon" ]; then
+    select_icon
+    exit 0
+fi
+
 choice=$(main_menu)
 case "$choice" in
     "🎭  GTK Theme")

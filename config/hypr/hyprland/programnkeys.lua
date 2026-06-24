@@ -148,5 +148,7 @@ hl.bind(mainMod .. " + SHIFT + L",     hl.dsp.exec_cmd("~/.config/hypr/scripts/c
 hl.bind(mainMod .. " + CTRL + W",      hl.dsp.exec_cmd("~/.config/hypr/scripts/change-workflow.sh"))
 -- Super + Shift + Z  → Pick SwayNC notification theme via Rofi
 hl.bind(mainMod .. " + SHIFT + Z",     hl.dsp.exec_cmd("~/.config/hypr/scripts/change-swaync-theme.sh"))
+-- Super + Shift + B  → Pick Waybar theme via Rofi
+hl.bind(mainMod .. " + SHIFT + B",     hl.dsp.exec_cmd("~/.config/hypr/scripts/change-waybar-theme.sh"))
 
 

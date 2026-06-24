@@ -10,7 +10,8 @@
 # Override aliases here in '$ZDOTDIR/.zshrc' (already set in .zshenv)
 alias resetportal="~/.config/hypr/scripts/reset-portal.sh"
 alias secscan="~/.config/hypr/scripts/malware_scanner.sh"
-alias changecursor="~/.config/hypr/scripts/cursor-picker.sh"
+alias changecursor="~/.config/hypr/scripts/gtk-theme-picker.sh cursor"
+alias changetheme="~/.config/hypr/scripts/gtk-theme-picker.sh"
 
 #  Autosuggestions — make suggestions visible (default fg=8 is invisible on dark backgrounds)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#888888,underline"
