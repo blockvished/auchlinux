@@ -17,27 +17,17 @@ Minimal **automated Arch Linux installation scripts** using `curl | bash`.
 
 ---
 
-## 📦 Available installers
+## 📦 Available installer
 
-### 1) Arch install with (Zen kernel -> my preference)
+### 1) Run installer directly (Zen/Stable/Both selection is interactive)
 ```bash
 curl -fsSL "https://raw.githubusercontent.com/blockvished/auchlinux/main/install.sh?$(date +%s)" | bash
 ```
 
-### 2) Install both kernels (Linux is default + Zen)
-```bash
-curl -fsSL "https://raw.githubusercontent.com/blockvished/auchlinux/main/install-both.sh?$(date +%s)" | bash
-```
-
-### You can edit and run locally
+### Or edit and run locally
 
 ```bash
 curl -fsSL "https://raw.githubusercontent.com/blockvished/auchlinux/main/install.sh" -o install.sh
-
-#or
-
-curl -fsSL "https://raw.githubusercontent.com/blockvished/auchlinux/main/install-both.sh" -o install.sh
-
 chmod +x install.sh
 ./install.sh
 ```
