@@ -206,12 +206,4 @@ if [ -d "$REPO_CONFIG_DIR/../icons" ]; then
   rsync -a "$REPO_CONFIG_DIR/../icons/" "$HOME/.icons/"
 fi
 
-# Sync wallpapers from repo to ~/Pictures/wallpapers (non-destructive, won't delete user-added ones)
-REPO_WALLS="$REPO_CONFIG_DIR/../wallpapers"
-if [ -d "$REPO_WALLS" ]; then
-  echo "[Sync] Syncing wallpapers to ~/Pictures/wallpapers..."
-  mkdir -p "$HOME/Pictures/wallpapers"
-  rsync -a --ignore-existing "$REPO_WALLS/" "$HOME/Pictures/wallpapers/"
-fi
-
 echo "==== Configurations successfully applied! ===="
