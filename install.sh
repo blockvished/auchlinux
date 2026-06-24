@@ -36,7 +36,7 @@ fi
 
 # ✅ Core packages (Kernel packages will be appended based on user selection)
 PKGS=(
-  base linux-firmware
+  base base-devel linux-firmware
   sudo git nvim nano
   networkmanager bash-completion
   efibootmgr dosfstools cryptsetup

@@ -92,7 +92,7 @@ ok "Config files deployed"
 
 # ─── 4a. Install custom Nerd Fonts ────────────────────────────────────────────
 section "Installing custom Nerd Fonts"
-FONTS_TAR="$REPO_DIR/scripts/fonts/Custom_Nerd_Fonts.tar.gz"
+FONTS_TAR="$REPO_DIR/scripts/assets/Custom_Nerd_Fonts.tar.gz"
 TARGET_DIR="$HOME/.local/share/fonts"
 
 if [[ -f "$FONTS_TAR" ]]; then

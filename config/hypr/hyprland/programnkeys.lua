@@ -150,5 +150,7 @@ hl.bind(mainMod .. " + CTRL + W",      hl.dsp.exec_cmd("~/.config/hypr/scripts/c
 hl.bind(mainMod .. " + SHIFT + Z",     hl.dsp.exec_cmd("~/.config/hypr/scripts/change-swaync-theme.sh"))
 -- Super + Shift + B  → Pick Waybar theme via Rofi
 hl.bind(mainMod .. " + SHIFT + B",     hl.dsp.exec_cmd("~/.config/hypr/scripts/change-waybar-theme.sh"))
+-- Super + Ctrl + G   → Pick and launch a Steam game via Rofi
+hl.bind(mainMod .. " + CTRL + G",      hl.dsp.exec_cmd("~/.config/hypr/scripts/rofi-steam-launcher.sh"))
 
 
