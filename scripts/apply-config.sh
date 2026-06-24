@@ -201,9 +201,18 @@ echo "[GTK] Configuring fallback cursor in ~/.icons/default..."
 mkdir -p "$HOME/.icons/default"
 echo -e "[Icon Theme]\nInherits=Bibata-Modern-Ice" > "$HOME/.icons/default/index.theme"
 
-if [ -d "$REPO_CONFIG_DIR/../icons" ]; then
-  echo "[Sync] Copying offline cursor themes to ~/.icons..."
-  rsync -a "$REPO_CONFIG_DIR/../icons/" "$HOME/.icons/"
+# Extract offline cursor/icon themes to ~/.icons (only if not already extracted)
+REPO_ICONS="$REPO_CONFIG_DIR/../scripts/icons"
+if [ -d "$REPO_ICONS" ]; then
+  mkdir -p "$HOME/.icons"
+  for tarball in "$REPO_ICONS"/*.tar.gz; do
+    [ -f "$tarball" ] || continue
+    name=$(basename "$tarball" .tar.gz)
+    if [ ! -d "$HOME/.icons/$name" ]; then
+      echo "[Sync] Extracting cursor/icon theme $name to ~/.icons..."
+      tar -xzf "$tarball" -C "$HOME/.icons/"
+    fi
+  done
 fi
 
 echo "==== Configurations successfully applied! ===="

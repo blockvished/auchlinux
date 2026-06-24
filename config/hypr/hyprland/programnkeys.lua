@@ -50,8 +50,6 @@ hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("~/.config/hypr/scripts/gtk-t
 -- Workflow Manager      : launch app groups             (open with SUPER + ALT + W)
 hl.bind(mainMod .. " + ALT + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/workflow-manager.sh"))
 
--- Animation Picker      : change hyprland animations    (open with SUPER + SHIFT + A)
-hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("~/.config/hypr/scripts/animation-picker.sh"))
 
 -- Shader Picker         : apply screen filters          (open with SUPER + ALT + S)
 hl.bind(mainMod .. " + ALT + S", hl.dsp.exec_cmd("~/.config/hypr/scripts/shader-picker.sh"))
@@ -146,6 +144,9 @@ hl.bind(mainMod .. " + N",             hl.dsp.exec_cmd("~/.config/hypr/scripts/t
 hl.bind(mainMod .. " + SHIFT + A",     hl.dsp.exec_cmd("~/.config/hypr/scripts/change-animation.sh"))
 -- Super + Shift + L  → Pick lock screen theme via Rofi
 hl.bind(mainMod .. " + SHIFT + L",     hl.dsp.exec_cmd("~/.config/hypr/scripts/change-lockscreen.sh"))
--- Super + Shift + W  → Pick workflow preset via Rofi
-hl.bind(mainMod .. " + SHIFT + W",     hl.dsp.exec_cmd("~/.config/hypr/scripts/change-workflow.sh"))
+-- Super + Ctrl + W   → Pick workflow preset via Rofi
+hl.bind(mainMod .. " + CTRL + W",      hl.dsp.exec_cmd("~/.config/hypr/scripts/change-workflow.sh"))
+-- Super + Shift + Z  → Pick SwayNC notification theme via Rofi
+hl.bind(mainMod .. " + SHIFT + Z",     hl.dsp.exec_cmd("~/.config/hypr/scripts/change-swaync-theme.sh"))
+
 
