@@ -234,8 +234,10 @@ function M.toggle_zsh_theme()
 end
 
 -- Toggle Rofi Theme Mode (cycles dynamically using Zsh helper)
+-- NOTE: The trailing & backgrounds the process so os.execute() returns
+-- immediately without blocking the Hyprland compositor.
 function M.toggle_rofi_theme()
-    os.execute("zsh -c 'source ~/.config/zsh/.zshrc; rofi-theme cycle' 2>/dev/null || true")
+    os.execute("zsh -c 'source ~/.config/zsh/.zshrc && rofi-theme cycle' &>/dev/null &")
 end
 
 -- Expose globally for convenience in other modules

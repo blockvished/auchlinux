@@ -1,112 +1,107 @@
 {
-  // General Waybar configuration
-  "layer": "top",
-  "margin": 0,
-  "position": "top",
-  "spacing": 10,
-  "border-size": 1,
-  "padding": 1,
-  "include": ["$XDG_CONFIG_HOME/waybar/includes/includes.json"],
-  // Modules configuration
-  "modules-left": [
-    "custom/launcher",
-    "hyprland/window",
-    "custom/text#two",
-    "custom/text#three",
-    "custom/text#four",
-    "custom/help#macos"
-  ],
-  "modules-right": ["image#wallpaper", "clock#date", "clock"],
-  // Module-specific configurations
-  "clock#12": {
-    "format": "{:%H:%M %p}",
-    "tooltip-format": "{:%A, %B %d, %Y}"
-  },
-  "clock": {
-    "format": "{:%H:%M}",
-    "tooltip-format": "{:%A, %B %d, %Y}"
-  },
-  "clock#date": {
-    "format": "{:%a %b %d}",
-    "rotate": 0,
-    // "format-alt": "{:%R \udb80\udced %d\u00b7%m\u00b7%y}",
-    "tooltip-format": "<span>{calendar}</span>",
-    "calendar": {
-      "mode": "month",
-      "mode-mon-col": 3,
-      "on-scroll": 1,
-      "on-click-right": "mode",
-      "format": {
-        "months": "<span color='#ffead3'><b>{}</b></span>",
-        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
-        "today": "<span color='#ff6699'><b>{}</b></span>"
-      }
+    // macOS-style top bar — minimal, clean
+    "layer": "top",
+    "position": "top",
+    "margin": 0,
+    "spacing": 0,
+
+    "modules-left": [
+        "custom/launcher",
+        "hyprland/window",
+        "custom/text#two",
+        "custom/text#three",
+        "custom/text#four"
+    ],
+    "modules-center": [],
+    "modules-right": [
+        "tray",
+        "pulseaudio",
+        "network",
+        "battery",
+        "clock#date",
+        "clock"
+    ],
+
+    "clock": {
+        "format": "{:%H:%M}",
+        "tooltip-format": "{:%A, %B %d, %Y}"
     },
-    "actions": {
-      "on-click-right": "mode",
-      "on-click-forward": "tz_up",
-      "on-click-backward": "tz_down",
-      "on-scroll-up": "shift_up",
-      "on-scroll-down": "shift_down"
+    "clock#date": {
+        "format": "{:%a %b %d}",
+        "tooltip-format": "<span>{calendar}</span>",
+        "calendar": {
+            "mode": "month",
+            "mode-mon-col": 3,
+            "on-scroll": 1,
+            "on-click-right": "mode",
+            "format": {
+                "months": "<span color='#ffead3'><b>{}</b></span>",
+                "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+                "today": "<span color='#ff6699'><b>{}</b></span>"
+            }
+        }
+    },
+
+    "hyprland/window": {
+        "format": "{class}",
+        "max-length": 20,
+        "rewrite": {
+            "^(?!.*\\\\S).*": "Finder"
+        }
+    },
+
+    "custom/launcher": {
+        "format": "",
+        "on-click": "rofi -show drun"
+    },
+    "custom/text#two": {
+        "format": "File",
+        "interval": 60,
+        "return-type": "plain",
+        "on-click": "dolphin"
+    },
+    "custom/text#three": {
+        "format": "Edit",
+        "interval": 60,
+        "return-type": "plain",
+        "on-click": "krita"
+    },
+    "custom/text#four": {
+        "format": "View",
+        "interval": 60,
+        "return-type": "plain"
+    },
+
+    "pulseaudio": {
+        "format": "{volume}% {icon}",
+        "format-muted": " {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    "network": {
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-ethernet": "{ipaddr}/{cidr} ",
+        "tooltip-format": "{ifname} via {gwaddr} ",
+        "format-disconnected": "Disconnected ⚠",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+    },
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "tray": {
+        "spacing": 4
     }
-  },
-  "hyprland/window": {
-    "format": "{class}",
-    "max-length": 20,
-    "rewrite": {
-      // if any window is focused display Finder
-      "^(?!.*\\S).*": "Finder"
-    }
-  },
-  "custom/launcher": {
-    "format": "",
-    "on-click": "rofi -show drun"
-  },
-  "custom/text#two": {
-    "format": "File",
-    "interval": 60,
-    "return-type": "plain",
-    "on-click": "dolphin" //or you favorite Filer Explorer
-  },
-  "custom/text#three": {
-    "format": "Edit",
-    "interval": 60,
-    "return-type": "plain",
-    "on-click": "krita" // or you favorite Image editor
-  },
-  "custom/text#four": {
-    "format": "View",
-    "interval": 60,
-    "return-type": "plain"
-  },
-  "custom/help#macos": {
-    "format": "Help",
-    "interval": 60,
-    "tooltip": true,
-    "tooltip-format": "Right-click for more HyDE options",
-    "return-type": "plain",
-    "on-click": "python3 ~/.config/hypr/scripts/keybindings-hint.py",
-    "menu": "on-click-right",
-    "menu-file": "${HYDE_WAYBAR_MENU_DIR:-$XDG_DATA_HOME/waybar/menus}/hyde-menu.xml",
-    "menu-actions": {
-      "animations-select": "echo 'Hyde disabled'",
-      "wallpaper-select": "~/.config/hypr/scripts/wallpaper-picker.sh",
-      "wallpaper-next": "echo 'Hyde disabled'",
-      "wallpaper-previous": "echo 'Hyde disabled'",
-      "wallpaper-random": "wallpaper-theme random",
-      "theme-next": "echo 'Hyde disabled'",
-      "theme-previous": "echo 'Hyde disabled'",
-      "theme-select": "echo 'Hyde disabled'",
-      "theme-import": "echo 'Hyde disabled'",
-      "waybar-restart": "~/.config/hypr/scripts/restart-waybar.sh",
-      "waybar-reload-css": "sed -i '${/^$/d;}'  $XDG_CONFIG_HOME/waybar/style.css",
-      "waybar-layout-select": "echo 'Hyde disabled'",
-      "waybar-layout-next": "echo 'Hyde disabled'",
-      "waybar-layout-previous": "echo 'Hyde disabled'",
-      "workflows-select": "echo 'Hyde disabled'",
-      "shaders-select": "echo 'Hyde disabled'",
-      "keybinds-hint": "python3 ~/.config/hypr/scripts/keybindings-hint.py",
-      "about-hyde": "xdg-open https://hydeproject.pages.dev"
-    }
-  }
 }
