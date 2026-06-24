@@ -49,22 +49,22 @@ entry {
 }
 
 listview {
-    lines: 6;
-    columns: 1;
+    lines: 3;
+    columns: 3;
     fixed-height: false;
     dynamic: true;
     scrollbar: false;
-    spacing: 6px;
+    spacing: 12px;
     background-color: transparent;
 }
 
 element {
-    padding: 8px;
+    padding: 12px;
     border-radius: 8px;
     background-color: transparent;
     text-color: @foreground;
-    spacing: 12px;
-    orientation: horizontal;
+    spacing: 8px;
+    orientation: vertical;
 }
 
 element selected.normal {
@@ -79,7 +79,7 @@ element-text {
 }
 
 element-icon {
-    size: 96px;
+    size: 160px;
     border-radius: 6px;
     background-color: transparent;
 }

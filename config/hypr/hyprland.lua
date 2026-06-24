@@ -87,12 +87,6 @@ hl.window_rule({
     float = true,
 })
 
--- Float KeePassXC
-hl.window_rule({
-    name  = "keepassxc-float",
-    match = { class = "org.keepassxc.KeePassXC" },
-    float = true,
-})
 
 -- Float Pavucontrol
 hl.window_rule({
@@ -122,5 +116,27 @@ hl.window_rule({
     float = true,
     size  = "1000 650",
     center = true,
+})
+
+-- ── Per-App Opacity ────────────────────────────────────────────
+-- Browsers: slight transparency for depth
+hl.window_rule({ name = "opacity-browser",   match = { class = "^(firefox|brave-browser|chromium|zen)$" }, opacity = "0.92 0.85" })
+-- Terminal: frosted glass feel
+hl.window_rule({ name = "opacity-kitty",     match = { class = "^kitty$" },                                opacity = "0.88 0.80" })
+-- Editor: slightly transparent
+hl.window_rule({ name = "opacity-code",      match = { class = "^(code-oss|[Cc]ode)$" },                  opacity = "0.88 0.80" })
+-- File Manager
+hl.window_rule({ name = "opacity-dolphin",   match = { class = "^org.kde.dolphin$" },                     opacity = "0.90 0.82" })
+
+-- ── Picture-in-Picture ─────────────────────────────────────────
+-- Any window titled "Picture in Picture" floats, pins, snaps to bottom-right
+hl.window_rule({
+    name             = "picture-in-picture",
+    match            = { title = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$" },
+    float            = true,
+    keep_aspect_ratio = true,
+    pin              = true,
+    move             = "(100%-w-20) (100%-h-20)",
+    size             = "640 360",
 })
 

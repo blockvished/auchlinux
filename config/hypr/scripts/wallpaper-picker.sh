@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-wallpaper_dir="$HOME/Pictures/Wallpapers"
+wallpaper_dir="$HOME/Pictures/wallpapers"
 theme="$HOME/.config/rofi/wallpaper/style.rasi"
 state_file="$HOME/.cache/current_wallpaper"
 
@@ -33,6 +33,7 @@ fi
 
 awww img "$wallpaper" --resize crop --transition-type grow --transition-pos center --transition-duration 1
 printf '%s\n' "$wallpaper" > "$state_file"
+ln -sf "$wallpaper" "$HOME/.cache/current_wallpaper_image"
 notify-send -u low -t 1200 "Wallpaper" "$choice"
 
 # Generate color palette dynamically using matugen
@@ -41,18 +42,6 @@ if command -v matugen >/dev/null 2>&1; then
   
   # Reload apps to apply new color palette dynamically
   (
-    # Reload Hyprland
-    if pgrep -x "Hyprland" >/dev/null; then
-      hyprctl reload || true
-    fi
-
-    # Reload Waybar
-    if systemctl --user is-active waybar.service >/dev/null 2>&1; then
-      systemctl --user restart waybar || true
-    elif pgrep -u "$USER" -x "waybar" >/dev/null; then
-      pkill -u "$USER" -USR2 waybar || true
-    fi
-
     # Reload Kitty instances
     if pgrep -u "$USER" -x "kitty" >/dev/null; then
       pkill -u "$USER" -USR1 kitty || true

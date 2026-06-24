@@ -10,6 +10,7 @@
 # Override aliases here in '$ZDOTDIR/.zshrc' (already set in .zshenv)
 alias resetportal="~/.config/hypr/scripts/reset-portal.sh"
 alias secscan="~/.config/hypr/scripts/malware_scanner.sh"
+alias changecursor="~/.config/hypr/scripts/cursor-picker.sh"
 
 #  Autosuggestions — make suggestions visible (default fg=8 is invisible on dark backgrounds)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#888888,underline"
@@ -354,3 +355,6 @@ export EDITOR=code
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Waybar theme switcher alias
+alias waybar-theme="$HOME/.config/waybar/scripts/waybar-theme"

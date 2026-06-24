@@ -18,4 +18,12 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("pgrep -x nm-applet >/dev/null || nm-applet --indicator")
     hl.exec_cmd("~/.config/hypr/scripts/clipboard-watch.sh")
     hl.exec_cmd("pypr")
+    
+    -- Bridge legacy X11 tray icons to Wayland (fixes Steam tray icon)
+    hl.exec_cmd("pgrep -x xembedsniproxy >/dev/null || xembedsniproxy &")
+    
+    -- Start background applications in the system tray
+    hl.exec_cmd("pgrep -x steam >/dev/null || steam -silent &")
+    hl.exec_cmd("pgrep -x discord >/dev/null || discord --start-minimized &")
+    hl.exec_cmd("pgrep -x keepassxc >/dev/null || keepassxc &")
 end)

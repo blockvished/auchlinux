@@ -41,14 +41,33 @@ hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/wallp
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("pypr toggle console"))
 hl.bind(mainMod .. " + SHIFT + P", hl.dsp.window.pin())
 hl.bind(mainMod .. " + CTRL + Escape", hl.dsp.exec_cmd("kitty --class sysmon-float -o remember_window_size=no -o initial_window_width=1024 -o initial_window_height=768 -e btop"))
+-- Zsh Theme             : toggle starship/fastfetch     (toggle with SUPER + ALT + T)
 hl.bind(mainMod .. " + ALT + T", luafunctions.toggle_zsh_theme)
-hl.bind(mainMod .. " + SHIFT + T", luafunctions.toggle_zsh_theme)
+
+-- GTK Theme Picker      : swap system themes            (open with SUPER + SHIFT + T)
+hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("~/.config/hypr/scripts/gtk-theme-picker.sh"))
+
+-- Workflow Manager      : launch app groups             (open with SUPER + ALT + W)
+hl.bind(mainMod .. " + ALT + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/workflow-manager.sh"))
+
+-- Animation Picker      : change hyprland animations    (open with SUPER + SHIFT + A)
+hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("~/.config/hypr/scripts/animation-picker.sh"))
+
+-- Shader Picker         : apply screen filters          (open with SUPER + ALT + S)
+hl.bind(mainMod .. " + ALT + S", hl.dsp.exec_cmd("~/.config/hypr/scripts/shader-picker.sh"))
+
+-- Media Player          : control media natively        (open with SUPER + ALT + M)
+hl.bind(mainMod .. " + ALT + M", hl.dsp.exec_cmd("~/.config/hypr/scripts/media-player.sh"))
+
+-- Quick Apps            : favorite apps launcher        (open with SUPER + SHIFT + E)
+hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd("~/.config/hypr/scripts/quick-apps.sh"))
 hl.bind(mainMod .. " + CTRL + T", luafunctions.toggle_rofi_theme)
 hl.bind(mainMod .. " + ALT + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/rofi-web-search.sh"))
 -- Toggle Game Mode (custom Lua script)
 hl.bind(mainMod .. " + G", luafunctions.toggle_gamemode)
 hl.bind(mainMod .. " + comma", hl.dsp.exec_cmd("~/.config/hypr/scripts/glyph-picker.sh"))
 hl.bind(mainMod .. " + period", hl.dsp.exec_cmd("~/.config/hypr/scripts/emoji-picker.sh"))
+hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd("swaync-client -t -sw"))
 hl.bind(mainMod .. " + slash", hl.dsp.exec_cmd("python3 ~/.config/hypr/scripts/keybindings-hint.py"))
 
 -- Screencapture
@@ -119,3 +138,14 @@ hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("~/.config/hypr/scripts/media.sh next"
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("~/.config/hypr/scripts/media.sh play-pause"), { locked = true })
 hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("~/.config/hypr/scripts/media.sh play-pause"), { locked = true })
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("~/.config/hypr/scripts/media.sh previous"),   { locked = true })
+
+-- ── New Feature Keybinds ────────────────────────────────────────
+-- Super + N          → Toggle blue light filter (night mode)
+hl.bind(mainMod .. " + N",             hl.dsp.exec_cmd("~/.config/hypr/scripts/toggle-blue-light.sh"))
+-- Super + Shift + A  → Pick animation preset via Rofi
+hl.bind(mainMod .. " + SHIFT + A",     hl.dsp.exec_cmd("~/.config/hypr/scripts/change-animation.sh"))
+-- Super + Shift + L  → Pick lock screen theme via Rofi
+hl.bind(mainMod .. " + SHIFT + L",     hl.dsp.exec_cmd("~/.config/hypr/scripts/change-lockscreen.sh"))
+-- Super + Shift + W  → Pick workflow preset via Rofi
+hl.bind(mainMod .. " + SHIFT + W",     hl.dsp.exec_cmd("~/.config/hypr/scripts/change-workflow.sh"))
+

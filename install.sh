@@ -34,9 +34,9 @@ if [[ "$CPU_VENDOR" == "GenuineIntel" ]]; then
   UCODE="intel-ucode"
 fi
 
-# ✅ ONLY zen kernel installed
+# ✅ Core packages (Kernel packages will be appended based on user selection)
 PKGS=(
-  base linux-zen linux-firmware
+  base linux-firmware
   sudo git nvim nano
   networkmanager bash-completion
   efibootmgr dosfstools cryptsetup
@@ -139,6 +139,22 @@ KEYMAP="$(read_tty "Keymap [$DEFAULT_KEYMAP]: ")"
 KEYMAP="${KEYMAP:-$DEFAULT_KEYMAP}"
 
 echo
+echo "Choose kernel(s) to install:"
+echo "  [1] Zen kernel only (Default)"
+echo "  [2] Stable kernel only"
+echo "  [3] Both kernels (Zen and Stable)"
+KERNEL_CHOICE="$(read_tty "Choice [1/2/3]: ")"
+KERNEL_CHOICE="${KERNEL_CHOICE:-1}"
+
+if [[ "$KERNEL_CHOICE" == "2" ]]; then
+  PKGS+=(linux)
+elif [[ "$KERNEL_CHOICE" == "3" ]]; then
+  PKGS+=(linux linux-zen)
+else
+  PKGS+=(linux-zen)
+fi
+
+echo
 info "Passwords: press ENTER to use defaults"
 echo "  root default = $DEFAULT_ROOT_PASSWORD"
 echo "  user default = $DEFAULT_USER_PASSWORD"
@@ -237,6 +253,7 @@ LUKS_PASSPHRASE2="${LUKS_PASSPHRASE2:-$DEFAULT_LUKS_PASSPHRASE}"
 
 [[ "$LUKS_PASSPHRASE" == "$LUKS_PASSPHRASE2" ]] || die "LUKS passphrases do not match!"
 
+# luksFormat + open using stdin
 printf "%s" "$LUKS_PASSPHRASE" | cryptsetup luksFormat --type luks2 "$ROOT" -
 printf "%s" "$LUKS_PASSPHRASE" | cryptsetup open "$ROOT" cryptroot -
 unset LUKS_PASSPHRASE LUKS_PASSPHRASE2
@@ -284,6 +301,7 @@ cat > /etc/hosts <<HOSTS
 127.0.1.1   $HOSTNAME.localdomain $HOSTNAME
 HOSTS
 
+# ✅ FIXED password setting (safe for ALL characters)
 printf '%s:%s\n' root "$ROOT_PASSWORD" | chpasswd
 useradd -m -G wheel -s /bin/bash "$USERNAME"
 printf '%s:%s\n' "$USERNAME" "$USER_PASSWORD" | chpasswd
@@ -311,26 +329,45 @@ LUKS_UUID="$(blkid -s UUID -o value "$ROOT")"
 ROOT_UUID="$(blkid -s UUID -o value /dev/mapper/cryptroot)"
 
 info "Writing systemd-boot config..."
+DEFAULT_ENTRY="arch-zen.conf"
+if [[ "$KERNEL_CHOICE" == "2" ]]; then
+  DEFAULT_ENTRY="arch.conf"
+fi
+
 cat > /mnt/boot/loader/loader.conf <<EOF
-default arch-zen.conf
+default $DEFAULT_ENTRY
 timeout 5
 console-mode max
 editor no
 EOF
 
-# ✅ ONLY Zen entry
-cat > /mnt/boot/loader/entries/arch-zen.conf <<EOF
+# ✅ Entry 1: Zen
+if [[ "$KERNEL_CHOICE" == "1" || "$KERNEL_CHOICE" == "3" ]]; then
+  cat > /mnt/boot/loader/entries/arch-zen.conf <<EOF
 title   Arch Linux (Zen)
 linux   /vmlinuz-linux-zen
 initrd  /$UCODE.img
 initrd  /initramfs-linux-zen.img
 options rd.luks.name=$LUKS_UUID=cryptroot root=UUID=$ROOT_UUID rw
 EOF
+fi
+
+# ✅ Entry 2: Stable
+if [[ "$KERNEL_CHOICE" == "2" || "$KERNEL_CHOICE" == "3" ]]; then
+  cat > /mnt/boot/loader/entries/arch.conf <<EOF
+title   Arch Linux (Stable)
+linux   /vmlinuz-linux
+initrd  /$UCODE.img
+initrd  /initramfs-linux.img
+options rd.luks.name=$LUKS_UUID=cryptroot root=UUID=$ROOT_UUID rw
+EOF
+fi
 
 # ucode fallback
 if [[ ! -f "/mnt/boot/$UCODE.img" ]]; then
-  warn "$UCODE.img not found → removing it from entry"
-  sed -i "/$UCODE.img/d" /mnt/boot/loader/entries/arch-zen.conf
+  warn "$UCODE.img not found → removing it from entries"
+  [[ -f /mnt/boot/loader/entries/arch-zen.conf ]] && sed -i "/$UCODE.img/d" /mnt/boot/loader/entries/arch-zen.conf
+  [[ -f /mnt/boot/loader/entries/arch.conf ]] && sed -i "/$UCODE.img/d" /mnt/boot/loader/entries/arch.conf
 fi
 
 # ============================

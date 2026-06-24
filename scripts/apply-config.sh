@@ -20,6 +20,9 @@ FOLDERS=(
   "matugen"
   "nwg-look"
   "pypr"
+  "Kvantum"
+  "qt5ct"
+  "qt6ct"
   "rofi"
   "starship"
   "swaync"
@@ -93,6 +96,13 @@ for folder in "${FOLDERS[@]}"; do
     elif [[ "$folder" == "rofi" ]]; then
       RSYNC_EXCLUDES+=("--exclude=launcher/style.rasi")       # managed by rofi-theme
       RSYNC_EXCLUDES+=("--exclude=launcher/rofi_theme_mode")  # active theme state
+    elif [[ "$folder" == "waybar" ]]; then
+      RSYNC_EXCLUDES+=("--exclude=modules/")
+      RSYNC_EXCLUDES+=("--exclude=includes/")
+      RSYNC_EXCLUDES+=("--exclude=theme.css")
+      RSYNC_EXCLUDES+=("--exclude=config.jsonc")
+      RSYNC_EXCLUDES+=("--exclude=style.css")
+      RSYNC_EXCLUDES+=("--exclude=themes/waybar_theme_mode")
     fi
     rsync --archive --delete "${RSYNC_EXCLUDES[@]}" "$SRC/" "$DST/"
   else
@@ -114,6 +124,44 @@ for folder in "${MERGE_FOLDERS[@]}"; do
     echo "[Skip] Merge folder $folder does not exist in repository config."
   fi
 done
+
+# Sync individual files (like dolphinrc, kdeglobals)
+FILES=(
+  "dolphinrc"
+  "kdeglobals"
+  "dolphinstaterc"
+)
+
+for file in "${FILES[@]}"; do
+  if [ -f "$REPO_CONFIG_DIR/$file" ]; then
+    echo "[Sync] Syncing file $file to ~/.config/..."
+    cp -f "$REPO_CONFIG_DIR/$file" "$TARGET_DIR/$file"
+  fi
+done
+
+# Sync keepassxc config (lives in its own subdir)
+if [ -f "$REPO_CONFIG_DIR/keepassxc/keepassxc.ini" ]; then
+  echo "[Sync] Syncing keepassxc config..."
+  mkdir -p "$TARGET_DIR/keepassxc"
+  cp -f "$REPO_CONFIG_DIR/keepassxc/keepassxc.ini" "$TARGET_DIR/keepassxc/keepassxc.ini"
+fi
+
+if [ -f "$REPO_CONFIG_DIR/dolphinstaterc" ]; then
+  mkdir -p "$HOME/.local/state"
+  cp -f "$REPO_CONFIG_DIR/dolphinstaterc" "$HOME/.local/state/dolphinstaterc"
+fi
+
+if [ -f "$REPO_CONFIG_DIR/dolphin_kxmlgui/dolphinui.rc" ]; then
+  echo "[Sync] Syncing Dolphin UI layout to ~/.local/share/kxmlgui5/dolphin/..."
+  mkdir -p "$HOME/.local/share/kxmlgui5/dolphin"
+  cp -f "$REPO_CONFIG_DIR/dolphin_kxmlgui/dolphinui.rc" "$HOME/.local/share/kxmlgui5/dolphin/dolphinui.rc"
+fi
+
+if [ -f "$REPO_CONFIG_DIR/dolphin_global_dir" ]; then
+  echo "[Sync] Syncing Dolphin global sorting layout..."
+  mkdir -p "$HOME/.local/share/dolphin/view_properties/global"
+  cp -f "$REPO_CONFIG_DIR/dolphin_global_dir" "$HOME/.local/share/dolphin/view_properties/global/.directory"
+fi
 
 # Ensure all scripts under ~/.config/ are executable
 echo "[Permissions] Ensuring all scripts under ~/.config/ are executable..."
@@ -141,6 +189,29 @@ if pgrep -x "Hyprland" > /dev/null; then
     echo "[Reload] Restarting Dunst notification daemon..."
     systemctl --user restart dunst || systemctl --user start dunst || true
   fi
+fi
+
+# Sync GTK Settings to dconf/gsettings
+echo "[GTK] Syncing cursor theme to GSettings database..."
+gsettings set org.gnome.desktop.interface cursor-theme "Bibata-Modern-Ice" || true
+gsettings set org.gnome.desktop.interface cursor-size 24 || true
+gsettings set org.gnome.desktop.interface color-scheme "prefer-dark" || true
+
+echo "[GTK] Configuring fallback cursor in ~/.icons/default..."
+mkdir -p "$HOME/.icons/default"
+echo -e "[Icon Theme]\nInherits=Bibata-Modern-Ice" > "$HOME/.icons/default/index.theme"
+
+if [ -d "$REPO_CONFIG_DIR/../icons" ]; then
+  echo "[Sync] Copying offline cursor themes to ~/.icons..."
+  rsync -a "$REPO_CONFIG_DIR/../icons/" "$HOME/.icons/"
+fi
+
+# Sync wallpapers from repo to ~/Pictures/wallpapers (non-destructive, won't delete user-added ones)
+REPO_WALLS="$REPO_CONFIG_DIR/../wallpapers"
+if [ -d "$REPO_WALLS" ]; then
+  echo "[Sync] Syncing wallpapers to ~/Pictures/wallpapers..."
+  mkdir -p "$HOME/Pictures/wallpapers"
+  rsync -a --ignore-existing "$REPO_WALLS/" "$HOME/Pictures/wallpapers/"
 fi
 
 echo "==== Configurations successfully applied! ===="
