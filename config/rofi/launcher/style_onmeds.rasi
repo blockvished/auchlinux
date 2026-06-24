@@ -1,165 +1,145 @@
 /**
- * Capsule-Pill Layout Theme (onmeds)
- * Fully rounded pill-shaped inputs and elements
- **/
+ * ROFI Layout 
+ *
+ * Style 10: Vertical layout with a compact background section.
+ * Attribute: rofilaunch,launcher
+ * User: The HyDE Project [ CompactPanel ]
+ * Copyright: https://github.com/prasanthrangan/hyprdots/
+ */
 
+
+// Config //
 configuration {
-    modi:                       "drun,run";
-    show-icons:                 true;
-    display-drun:               "󰀻 Apps";
-    display-run:                " Run";
-    drun-display-format:        "{name}";
+    modi:                        "drun,filebrowser,window,run";
+    show-icons:                  true;
+    display-drun:                " ";
+    display-run:                 " ";
+    display-filebrowser:         " ";
+    display-window:              " ";
+    drun-display-format:         "{name}";
+    window-format:               "{w}{t}";
+    font:                        "JetBrainsMono Nerd Font 10";
+    icon-theme:                  "Tela-circle-dracula";
 }
 
-@import                          "shared/colors.rasi"
-@import                          "shared/fonts.rasi"
+@theme "~/.config/rofi/theme.rasi"
 
-* {
-    /* Soft pastel accent */
-    border-colour:               #f5c2e7ff;
-    handle-colour:               #f5c2e7ff;
-    background-colour:           #1e1e2edd;
-    foreground-colour:           #cdd6f4ff;
-    alternate-background:        #18182580;
-    selected-normal-background:  #f5c2e7ff;
-    selected-normal-foreground:  #11111bff;
-}
 
+// Main //
 window {
+    height:                      40em;
+    width:                       25em;
     transparency:                "real";
-    location:                    center;
-    anchor:                      center;
     fullscreen:                  false;
-    width:                       650px;
-    height:                      500px;
-    x-offset:                    0px;
-    y-offset:                    0px;
     enabled:                     true;
-    margin:                      0px;
-    padding:                     0px;
-    border:                      2px solid;
-    border-radius:               24px;   /* Highly rounded window corners */
-    border-color:                @border-colour;
     cursor:                      "default";
-    background-color:            @background-colour;
+    spacing:                     0em;
+    padding:                     0em;
+    border-color:                @main-br;
+    background-color:            @main-bg;
 }
-
 mainbox {
     enabled:                     true;
-    spacing:                     15px;
-    margin:                      0px;
-    padding:                     25px;
-    border:                      0px;
+    spacing:                     0em;
+    padding:                     1em;
+    orientation:                 vertical;
+    children:                    [ "inputbar" , "listbox" ];
     background-color:            transparent;
-    children:                    [ "inputbar", "listview", "mode-switcher" ];
 }
 
+
+// Inputs //
 inputbar {
     enabled:                     true;
-    spacing:                     12px;
-    margin:                      0px;
-    padding:                     12px 20px;
-    border:                      0px;
-    border-radius:               24px;   /* Pill search bar */
-    background-color:            @alternate-background;
-    text-color:                  @foreground-colour;
-    children:                    [ "textbox-prompt-colon", "entry" ];
+    spacing:                     0em;
+    padding:                     4em;
+    children:                    [ "entry" ];
+    background-color:            @main-bg;
+    background-image:            url("~/.cache/hyde/wall.thmb", width);
+    border-radius:               1em 1em 0em 0em;
 }
-
-textbox-prompt-colon {
-    enabled:                     true;
-    expand:                      false;
-    str:                         "󰍉";
-    background-color:            transparent;
-    text-color:                  #f5c2e7ff;
-    vertical-align:              0.5;
-}
-
 entry {
-    enabled:                     true;
-    background-color:            transparent;
-    text-color:                  inherit;
-    cursor:                      text;
-    placeholder:                 "Type to search...";
-    placeholder-color:           #6c7086ff;
-    vertical-align:              0.5;
+    enabled:                     false;
 }
 
+
+// Lists //
+listbox {
+    spacing:                     0em;
+    padding:                     0em;
+    children:                    [ "dummyt" , "listview" , "dummyb" ];
+    background-color:            @main-bg;
+    border-radius:               0em 0em 1em 1em;
+}
 listview {
     enabled:                     true;
+    spacing:                     0.4em;
+    padding:                     1em;
     columns:                     1;
-    lines:                       6;
+    lines:                       10;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   false;
     layout:                      vertical;
     reverse:                     false;
+    expand:                      false;
     fixed-height:                true;
     fixed-columns:               true;
-    spacing:                     8px;
-    margin:                      0px;
-    padding:                     5px;
-    border:                      0px;
-    background-color:            transparent;
-    text-color:                  @foreground-colour;
     cursor:                      "default";
+    background-color:            @main-bg;
+    text-color:                  @main-fg;
+}
+dummyt {
+    spacing:                     0em;
+    padding:                     0em;
+    background-color:            @main-bg;
+}
+dummyb {
+    spacing:                     0em;
+    padding:                     0em;
+    background-color:            @main-bg;
+    border-radius:               0em 0em 1em 1em;
 }
 
+
+// Elements //
 element {
     enabled:                     true;
-    spacing:                     15px;
-    margin:                      0px;
-    padding:                     10px 20px;
-    border:                      0px;
-    border-radius:               20px;   /* Pill items */
-    background-color:            transparent;
-    text-color:                  @foreground-colour;
+    spacing:                     1em;
+    padding:                     0.2em 0.2em 0.2em 1.5em;
     cursor:                      pointer;
-}
-
-element normal.normal {
     background-color:            transparent;
-    text-color:                  @foreground-colour;
+    text-color:                  @main-fg;
 }
-
 element selected.normal {
-    background-color:            @selected-normal-background;
-    text-color:                  @selected-normal-foreground;
+    background-color:            @select-bg;
+    text-color:                  @select-fg;
 }
-
 element-icon {
-    background-color:            transparent;
-    text-color:                  inherit;
-    size:                        26px;
+    size:                        2em;
     cursor:                      inherit;
-}
-
-element-text {
     background-color:            transparent;
     text-color:                  inherit;
+}
+element-text {
     vertical-align:              0.5;
-}
-
-mode-switcher {
-    enabled:                     true;
-    spacing:                     10px;
-    margin:                      0px;
-    padding:                     0px;
+    horizontal-align:            0.0;
+    cursor:                      inherit;
     background-color:            transparent;
+    text-color:                  inherit;
 }
 
-button {
-    padding:                     8px 16px;
-    border:                      0px;
-    border-radius:               16px;   /* Pill mode buttons */
-    background-color:            @alternate-background;
-    text-color:                  @foreground-colour;
-    cursor:                      pointer;
+// Error message //
+error-message {
+    text-color:                  @main-fg;
+    background-color:            @main-bg;
+    text-transform:              capitalize;
+    children:                    [ "textbox" ];
+}
+
+textbox {
+    text-color:                  inherit;
+    background-color:            inherit;
     vertical-align:              0.5;
     horizontal-align:            0.5;
-}
-
-button selected {
-    background-color:            @selected-normal-background;
-    text-color:                  @selected-normal-foreground;
 }
