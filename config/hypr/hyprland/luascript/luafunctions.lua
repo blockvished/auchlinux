@@ -6,6 +6,7 @@ local M = {}
 
 -- Toggle Game Mode (Performance vs. Aesthetic Mode)
 function M.toggle_gamemode()
+    local home = os.getenv("HOME") or "/home/newpr"
     local anims = hl.get_config("animations.enabled")
     if anims then
         hl.config({
@@ -21,7 +22,9 @@ function M.toggle_gamemode()
                 rounding = 0
             }
         })
-        hl.dsp.exec_cmd("notify-send -a 'Game Mode' -i 'dialog-information' -u low 'Game Mode' 'Performance Mode Enabled (Effects, Gaps & Borders Reduced)'")
+        -- Switch waybar to the lightweight minimal bar while gaming
+        os.execute(home .. "/.config/waybar/scripts/waybar-theme min >/dev/null 2>&1 &")
+        os.execute("notify-send -a 'Game Mode' -i 'dialog-information' -u low 'Game Mode' 'Performance Mode Enabled (Effects, Gaps & Borders Reduced)' &")
     else
         hl.config({
             animations = { enabled = true },
@@ -36,7 +39,9 @@ function M.toggle_gamemode()
                 rounding = 10
             }
         })
-        hl.dsp.exec_cmd("notify-send -a 'Game Mode' -i 'dialog-information' -u low 'Game Mode' 'Aesthetic Mode Restored'")
+        -- Restore the full auch bar when leaving game mode
+        os.execute(home .. "/.config/waybar/scripts/waybar-theme auch >/dev/null 2>&1 &")
+        os.execute("notify-send -a 'Game Mode' -i 'dialog-information' -u low 'Game Mode' 'Aesthetic Mode Restored' &")
     end
 end
 

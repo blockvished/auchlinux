@@ -23,6 +23,8 @@ FOLDERS=(
   "Kvantum"
   "qt5ct"
   "qt6ct"
+  "uwsm"
+  "xsettingsd"
   "rofi"
   "starship"
   "swaync"
@@ -211,6 +213,20 @@ if [ -d "$REPO_ICONS" ]; then
     if [ ! -d "$HOME/.icons/$name" ]; then
       echo "[Sync] Extracting cursor/icon theme $name to ~/.icons..."
       tar -xzf "$tarball" -C "$HOME/.icons/"
+    fi
+  done
+fi
+
+# Extract offline GTK themes to ~/.themes (only if not already extracted)
+REPO_GTK_THEMES="$REPO_CONFIG_DIR/../scripts/gtk-themes"
+if [ -d "$REPO_GTK_THEMES" ]; then
+  mkdir -p "$HOME/.themes"
+  for tarball in "$REPO_GTK_THEMES"/*.tar.gz; do
+    [ -f "$tarball" ] || continue
+    theme_dir=$(tar -tzf "$tarball" | head -1 | cut -d/ -f1)
+    if [ -n "$theme_dir" ] && [ ! -d "$HOME/.themes/$theme_dir" ]; then
+      echo "[Sync] Extracting GTK theme $theme_dir to ~/.themes..."
+      tar -xzf "$tarball" -C "$HOME/.themes/"
     fi
   done
 fi

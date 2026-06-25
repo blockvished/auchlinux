@@ -13,14 +13,14 @@ favorites_file="$HOME/.cache/cliphist_favorites"
 "$watcher"
 
 # Generate wallpaper blur, quad, sqre and thmb caches dynamically for Rofi theme styling
-hyde_cache="$HOME/.cache/hyde"
+auch_cache="$HOME/.cache/auch"
 current_wall="$(cat "$HOME/.cache/current_wallpaper" 2>/dev/null)"
 if [[ -f "$current_wall" ]]; then
-  mkdir -p "$hyde_cache"
-  blur_file="$hyde_cache/wall.blur"
-  quad_file="$hyde_cache/wall.quad"
-  sqre_file="$hyde_cache/wall.sqre"
-  thmb_file="$hyde_cache/wall.thmb"
+  mkdir -p "$auch_cache"
+  blur_file="$auch_cache/wall.blur"
+  quad_file="$auch_cache/wall.quad"
+  sqre_file="$auch_cache/wall.sqre"
+  thmb_file="$auch_cache/wall.thmb"
 
   # If cached files do not exist, or the wallpaper has updated, regenerate
   if [[ ! -f "$blur_file" || "$current_wall" -nt "$blur_file" ]]; then
@@ -338,7 +338,7 @@ scan_image() {
   local image_path="${runtime_dir}/cliphist_ocr.png"
 
   local index
-  index="$(HYDE_CLIPHIST_IMAGE_ONLY=true python3 "$HOME/.config/hypr/scripts/cliphist-image.py" | head -n1 | awk '{print $1}')"
+  index="$(AUCH_CLIPHIST_IMAGE_ONLY=true python3 "$HOME/.config/hypr/scripts/cliphist-image.py" | head -n1 | awk '{print $1}')"
 
   if [[ -z "$index" ]]; then
     notify "OCR Error: No images in clipboard history"

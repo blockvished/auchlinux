@@ -3,7 +3,7 @@ theme_dir="$HOME/auchlinux/config/waybar/themes"
 mode_file="$theme_dir/waybar_theme_mode"
 
 # Read current mode
-current_mode="newpr"
+current_mode="auch"
 if [[ -f "$mode_file" ]]; then
     current_mode=$(cat "$mode_file")
 fi

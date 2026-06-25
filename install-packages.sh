@@ -135,6 +135,7 @@ OFFICIAL_PKGS=(
     kvantum
     kvantum-qt5
     imagemagick
+    xsettingsd
     papirus-icon-theme
     matugen
     rofi-calc

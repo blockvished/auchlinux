@@ -51,12 +51,12 @@ fi
 
 # Generate wallpaper blur, quad, sqre and thmb caches dynamically for Rofi theme styling
 (
-  hyde_cache="$HOME/.cache/hyde"
-  mkdir -p "$hyde_cache"
-  blur_file="$hyde_cache/wall.blur"
-  quad_file="$hyde_cache/wall.quad"
-  sqre_file="$hyde_cache/wall.sqre"
-  thmb_file="$hyde_cache/wall.thmb"
+  auch_cache="$HOME/.cache/auch"
+  mkdir -p "$auch_cache"
+  blur_file="$auch_cache/wall.blur"
+  quad_file="$auch_cache/wall.quad"
+  sqre_file="$auch_cache/wall.sqre"
+  thmb_file="$auch_cache/wall.thmb"
 
   magick "$wallpaper"[0] -strip -scale 10% -blur 0x3 -resize 100% "$blur_file"
   magick "$wallpaper"[0] -strip -thumbnail 500x500^ -gravity center -extent 500x500 "$sqre_file"

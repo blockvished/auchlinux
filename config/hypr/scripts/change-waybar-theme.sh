@@ -13,7 +13,7 @@ fi
 THEMES=$(find "$THEME_DIR" -name "config_*.jsonc" 2>/dev/null | sed -E 's/.*config_(.*)\.jsonc/\1/' | sort)
 
 # Get current theme
-CURRENT="newpr"
+CURRENT="auch"
 if [[ -f "$THEME_DIR/waybar_theme_mode" ]]; then
     CURRENT=$(cat "$THEME_DIR/waybar_theme_mode")
 elif [[ -f "$WAYBAR_DIR/themes/waybar_theme_mode" ]]; then

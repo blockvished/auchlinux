@@ -40,7 +40,7 @@ def main():
             img_path = decode_and_save_image(grp)
             if img_path:
                 print(f"{line}\0icon\x1f{img_path}")
-        elif os.getenv("HYDE_CLIPHIST_IMAGE_ONLY", "").lower() not in ("true", "1", "yes"):
+        elif os.getenv("AUCH_CLIPHIST_IMAGE_ONLY", "").lower() not in ("true", "1", "yes"):
             # Use a standard text icon name for rofi to resolve
             print(f"{line}\0icon\x1ftext-x-generic")
 
