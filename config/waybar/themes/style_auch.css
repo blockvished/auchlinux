@@ -665,3 +665,15 @@ label:focus {
 #power-pill #battery.plugged {
     color: #2ecc71;
 }
+
+/* Solid tooltip background — required since the waybar blur layerrule would
+   otherwise blur GTK's semi-transparent default tooltip into invisibility. */
+tooltip {
+    background-color: @background-dark;
+    border: 1px solid @primary;
+    border-radius: 8px;
+}
+tooltip label {
+    color: @text;
+    padding: 2px 4px;
+}

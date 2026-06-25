@@ -140,11 +140,3 @@ hl.window_rule({
     size             = "640 360",
 })
 
--- ── Waybar frosted-glass blur ──────────────────────────────────
--- Blur the wallpaper behind the translucent waybar pills.
-hl.layer_rule({
-    name         = "waybar-blur",
-    match        = { namespace = "^waybar$" },
-    blur         = true,
-    ignore_alpha = 0.2,
-})
