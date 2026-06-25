@@ -64,6 +64,8 @@ hl.bind(mainMod .. " + ALT + Q", hl.dsp.exec_cmd("~/.config/hypr/scripts/quick-a
 -- File finder (rofi)     : SUPER + SHIFT + E (toggle)
 hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd("pkill -x rofi || rofi -show filebrowser -theme ~/.config/rofi/launcher/style.rasi"))
 hl.bind(mainMod .. " + CTRL + T", luafunctions.toggle_rofi_theme)
+-- Rofi STYLE picker, visual grid (our themes as text tiles, lol ones as image previews)
+hl.bind(mainMod .. " + SHIFT + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/rofi-themeselect.sh"))
 hl.bind(mainMod .. " + ALT + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/rofi-web-search.sh"))
 -- Toggle Game Mode (custom Lua script)
 hl.bind(mainMod .. " + G", luafunctions.toggle_gamemode)
