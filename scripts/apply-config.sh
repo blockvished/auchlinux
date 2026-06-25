@@ -25,6 +25,7 @@ FOLDERS=(
   "qt6ct"
   "uwsm"
   "xsettingsd"
+  "satty"
   "rofi"
   "starship"
   "swaync"

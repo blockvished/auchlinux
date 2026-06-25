@@ -72,13 +72,27 @@ hl.bind(mainMod .. " + period", hl.dsp.exec_cmd("~/.config/hypr/scripts/emoji-pi
 hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd("swaync-client -t -sw"))
 hl.bind(mainMod .. " + slash", hl.dsp.exec_cmd("python3 ~/.config/hypr/scripts/keybindings-hint.py"))
 
--- Screencapture
-hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("~/.config/hypr/scripts/poc/screenshot.sh s"))
-hl.bind(mainMod .. " + CTRL + P", hl.dsp.exec_cmd("~/.config/hypr/scripts/poc/screenshot.sh sf"))
-hl.bind(mainMod .. " + ALT + P", hl.dsp.exec_cmd("~/.config/hypr/scripts/poc/screenshot.sh w"))
-hl.bind("Print", hl.dsp.exec_cmd("~/.config/hypr/scripts/poc/screenshot.sh p"))
-hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("~/.config/hypr/scripts/poc/screenshot.sh sc"))
-hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd("~/.config/hypr/scripts/poc/screenshot.sh sq"))
+-- ═══════════════════ SCREENCAPTURE ═══════════════════
+-- Two versions live side-by-side while you decide (~1 week). Pick one, then
+-- comment the other. Same keys, different script + annotation editor:
+--   OURS = poc/screenshot.sh  (swappy editor)   ← currently OFF
+--   LOL  = screenshot_lol.sh  (satty editor, floats centered)  ← currently ON
+--
+-- ── OURS (swappy) — uncomment this block + comment the LOL one to switch back.
+--    The poc/screenshot.sh script stays regardless; nothing is deleted.
+-- hl.bind(mainMod .. " + P",        hl.dsp.exec_cmd("~/.config/hypr/scripts/poc/screenshot.sh s"))   -- snip an area
+-- hl.bind(mainMod .. " + CTRL + P", hl.dsp.exec_cmd("~/.config/hypr/scripts/poc/screenshot.sh w"))   -- pick a window
+-- hl.bind(mainMod .. " + ALT + P",  hl.dsp.exec_cmd("~/.config/hypr/scripts/poc/screenshot.sh sf"))  -- snip an area, screen frozen
+-- hl.bind("Print",                  hl.dsp.exec_cmd("~/.config/hypr/scripts/poc/screenshot.sh p"))   -- whole screen
+hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("~/.config/hypr/scripts/poc/screenshot.sh sc"))   -- OCR: snip a region, copy its TEXT to clipboard
+hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd("~/.config/hypr/scripts/poc/screenshot.sh sq"))   -- QR: snip a region, decode the QR code
+
+-- ── LOL-style (satty) — currently ACTIVE.  area modes: click a window to grab
+--    just it, or drag for a custom region.
+hl.bind(mainMod .. " + P",        hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot_lol.sh s"))   -- snip an area / click a window
+hl.bind(mainMod .. " + CTRL + P", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot_lol.sh sf"))  -- same, but screen frozen first
+hl.bind(mainMod .. " + ALT + P",  hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot_lol.sh m"), { locked = true })   -- this monitor only
+hl.bind("Print",                  hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot_lol.sh p"), { locked = true })   -- all monitors
 hl.bind(mainMod .. " + ALT + R", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenrecord.sh"))
 hl.bind(mainMod .. " + ALT + SHIFT + R", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenrecord.sh --fullscreen"))
 

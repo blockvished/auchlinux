@@ -97,6 +97,14 @@ hl.window_rule({
     size   = "720 540",
 })
 
+-- Float Satty (screenshot annotation) — centered, sized to most screenshots
+hl.window_rule({
+    name   = "satty-float",
+    match  = { class = "^(com.gabm.satty)$" },
+    float  = true,
+    center = true,
+})
+
 -- Float Blueman Manager
 hl.window_rule({
     name  = "blueman-manager-float",
