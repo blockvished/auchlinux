@@ -88,11 +88,13 @@ hl.window_rule({
 })
 
 
--- Float Pavucontrol
+-- Float Pavucontrol (both GTK and Qt) — centered, sensible size
 hl.window_rule({
-    name  = "pavucontrol-float",
-    match = { class = "org.pulseaudio.pavucontrol" },
-    float = true,
+    name   = "pavucontrol-float",
+    match  = { class = "^(org.pulseaudio.pavucontrol|pavucontrol-qt)$" },
+    float  = true,
+    center = true,
+    size   = "720 540",
 })
 
 -- Float Blueman Manager

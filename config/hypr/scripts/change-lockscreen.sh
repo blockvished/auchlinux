@@ -17,7 +17,10 @@ CHOICE=$(echo "$THEMES" | rofi -dmenu -i -p "Lock Screen  [$CURRENT]" -theme "$t
 CONF="$LOCK_DIR/$CHOICE.conf"
 [[ ! -f "$CONF" ]] && exit 1
 
-# Backup original and symlink chosen theme
+# Back up the current working config before overwriting (so a bad theme can
+# always be reverted — the picker previously cp -f'd with no backup).
+[[ -f "$MAIN_CONF" ]] && cp -f "$MAIN_CONF" "$LOCK_DIR/.last-working.conf"
+
 cp -f "$CONF" "$MAIN_CONF"
 echo "$CHOICE" > "$STATE_FILE"
 

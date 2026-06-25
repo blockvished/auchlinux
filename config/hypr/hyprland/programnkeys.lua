@@ -39,8 +39,10 @@ hl.bind(mainMod .. " + ALT + G",       hl.dsp.exec_cmd("~/.config/hypr/scripts/n
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/wallpaper-picker.sh"))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("pypr toggle console"))
-hl.bind(mainMod .. " + SHIFT + P", hl.dsp.window.pin())
-hl.bind(mainMod .. " + CTRL + Escape", hl.dsp.exec_cmd("kitty --class sysmon-float -o remember_window_size=no -o initial_window_width=1024 -o initial_window_height=768 -e btop"))
+hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("~/.config/hypr/scripts/pin-window.sh"))
+-- Color picker : hyprpicker, hex copied to clipboard (SUPER + SHIFT + C)
+hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("hyprpicker -a -f hex"))
+hl.bind("CTRL + SHIFT + Escape", hl.dsp.exec_cmd("kitty --class sysmon-float -o remember_window_size=no -o initial_window_width=1024 -o initial_window_height=768 -e btop"))
 -- Zsh Theme             : toggle starship/fastfetch     (toggle with SUPER + ALT + T)
 hl.bind(mainMod .. " + ALT + T", luafunctions.toggle_zsh_theme)
 
@@ -57,8 +59,10 @@ hl.bind(mainMod .. " + ALT + S", hl.dsp.exec_cmd("~/.config/hypr/scripts/shader-
 -- Media Player          : control media natively        (open with SUPER + ALT + M)
 hl.bind(mainMod .. " + ALT + M", hl.dsp.exec_cmd("~/.config/hypr/scripts/media-player.sh"))
 
--- Quick Apps            : favorite apps launcher        (open with SUPER + SHIFT + E)
-hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd("~/.config/hypr/scripts/quick-apps.sh"))
+-- Quick Apps            : favorite apps launcher        (open with SUPER + ALT + Q)
+hl.bind(mainMod .. " + ALT + Q", hl.dsp.exec_cmd("~/.config/hypr/scripts/quick-apps.sh"))
+-- File finder (rofi)     : SUPER + SHIFT + E (toggle)
+hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd("pkill -x rofi || rofi -show filebrowser -theme ~/.config/rofi/launcher/style.rasi"))
 hl.bind(mainMod .. " + CTRL + T", luafunctions.toggle_rofi_theme)
 hl.bind(mainMod .. " + ALT + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/rofi-web-search.sh"))
 -- Toggle Game Mode (custom Lua script)
@@ -88,6 +92,15 @@ hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + up",    hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down",  hl.dsp.focus({ direction = "down" }))
 
+-- Smart-move active window with mainMod + SHIFT + CONTROL + arrows:
+-- floating windows nudge by 30px, tiled windows move in the layout direction.
+-- (Native lua dispatch via luafunctions.smart_move — this lua-Hyprland does not
+--  accept `hyprctl dispatch moveactive` over the CLI.)
+hl.bind(mainMod .. " + SHIFT + CONTROL + left",  hl.dsp.exec_cmd("~/.config/hypr/scripts/smart-move.sh left"))
+hl.bind(mainMod .. " + SHIFT + CONTROL + right", hl.dsp.exec_cmd("~/.config/hypr/scripts/smart-move.sh right"))
+hl.bind(mainMod .. " + SHIFT + CONTROL + up",    hl.dsp.exec_cmd("~/.config/hypr/scripts/smart-move.sh up"))
+hl.bind(mainMod .. " + SHIFT + CONTROL + down",  hl.dsp.exec_cmd("~/.config/hypr/scripts/smart-move.sh down"))
+
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
 for i = 1, 10 do
@@ -105,8 +118,8 @@ hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:mag
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("hyprctl dispatch hyprexpo:expo toggle"))
 -- Hyprbars  : window title bars         (toggle with SUPER + B)
 hl.bind(mainMod .. " + B",     hl.dsp.exec_cmd("hyprctl dispatch hyprbars:toggle"))
--- Hyprspace : GNOME-like overview       (toggle with SUPER + TAB)
-hl.bind(mainMod .. " + Tab",   hl.dsp.exec_cmd("hyprctl dispatch hyprspace:overview toggle"))
+-- Window switcher (rofi)   : toggle with SUPER + TAB
+hl.bind(mainMod .. " + Tab",   hl.dsp.exec_cmd("pkill -x rofi || rofi -show window -theme ~/.config/rofi/launcher/style.rasi"))
 
 -- ── Update Checker ─────────────────────────────────────────────
 -- SUPER + U : open Rofi update picker

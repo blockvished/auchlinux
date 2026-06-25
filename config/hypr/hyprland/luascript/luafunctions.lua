@@ -196,6 +196,40 @@ function M.toggle_rofi_theme()
     os.execute("lua " .. home .. "/.config/hypr/hyprland/luascript/rofi-theme.lua cycle &>/dev/null &")
 end
 
+-- Smart-move active window: floating windows nudge by pixels (relative, since
+-- the lua window.move({x,y}) is absolute we add the delta to the current pos),
+-- tiled windows move in the layout direction. Replaces a broken approach that
+-- shelled out to `hyprctl dispatch moveactive`, which this lua-Hyprland rejects.
+function M.smart_move(dx, dy, dir)
+    local h = io.popen("hyprctl activewindow -j 2>/dev/null")
+    local data = h and h:read("*a") or ""
+    if h then h:close() end
+    if data:match('"floating"%s*:%s*true') then
+        local x = tonumber(data:match('"at"%s*:%s*%[%s*(-?%d+)'))
+        local y = tonumber(data:match('"at"%s*:%s*%[%s*-?%d+%s*,%s*(-?%d+)'))
+        if x and y then
+            hl.dispatch(hl.dsp.window.move({ x = x + dx, y = y + dy }))
+        end
+    else
+        hl.dispatch(hl.dsp.window.move({ direction = dir }))
+    end
+end
+
+-- Pin active window: a window must be floating to be pinned, so float it first
+-- (only if it isn't already), then toggle pin. A pinned window stays visible on
+-- every workspace. (Native window.pin() alone silently no-ops on tiled windows.)
+function M.pin_window()
+    local h = io.popen("hyprctl activewindow -j 2>/dev/null")
+    local data = h and h:read("*a") or ""
+    if h then h:close() end
+    local floating = data:match('"floating"%s*:%s*(%a+)')
+    local pinned = data:match('"pinned"%s*:%s*(%a+)')
+    if pinned ~= "true" and floating ~= "true" then
+        hl.dispatch(hl.dsp.window.float())   -- togglefloating → make it floating
+    end
+    hl.dispatch(hl.dsp.window.pin())         -- toggle pin
+end
+
 -- Expose globally for convenience in other modules
 _G.luafunctions = M
 
