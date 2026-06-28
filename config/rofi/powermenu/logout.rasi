@@ -26,7 +26,31 @@ mainbox {
     spacing: 0px;
     margin: 35% 10%;
     background-color: transparent;
-    children: [ "listview" ];
+    children: [ "inputbar", "listview" ];
+}
+
+/* Invisible-but-functional input — lets you type to filter (l→Lock, s→Shutdown,
+   log→Logout, su→Suspend) while keeping the icon-row look unchanged. */
+inputbar {
+    enabled: true;
+    font: "JetBrainsMono Nerd Font 1";
+    padding: 0px;
+    margin: 0px;
+    spacing: 0px;
+    background-color: transparent;
+    text-color: transparent;
+    children: [ "entry" ];
+}
+
+entry {
+    enabled: true;
+    font: "JetBrainsMono Nerd Font 1";
+    padding: 0px;
+    margin: 0px;
+    background-color: transparent;
+    text-color: transparent;
+    cursor: text;
+    placeholder: "";
 }
 
 listview {

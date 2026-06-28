@@ -2,7 +2,7 @@
 
 theme="$HOME/.config/rofi/powermenu/logout.rasi"
 
-options=$'  Lock\n󰤄  Suspend\n󰍃  Logout\n󰜉  Restart\n󰐥  Shutdown'
+options=$'  Lock\n󰐥  Shutdown\n󰜉  Restart\n󰍃  Logout\n󰤄  Suspend'
 
 menu() {
   local prompt="$1"

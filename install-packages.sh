@@ -168,6 +168,14 @@ OFFICIAL_PKGS=(
     noto-fonts
     noto-fonts-cjk
     noto-fonts-emoji
+
+    # Camera & webcam (physical webcam + phone-as-webcam pipeline)
+    v4l-utils              # v4l2-ctl: list/configure capture devices
+    v4l2loopback-dkms      # virtual /dev/video for phone/OBS virtual cameras
+    linux-zen-headers      # required to build the v4l2loopback dkms module (zen kernel)
+    guvcview               # GUI webcam viewer / control panel
+    obs-studio             # advanced capture/streaming + virtual camera
+    scrcpy                 # phone mirroring (also a USB camera source)
 )
 
 # 4. AUR packages to install
@@ -177,6 +185,7 @@ AUR_PKGS=(
     pokego-bin
     zsh-256color
     grimblast-git
+    droidcam                # phone-as-webcam client (Wi-Fi/USB)
 )
 
 # Install official packages
@@ -225,6 +234,18 @@ if [[ -f "$FONTS_TAR" ]]; then
     tar -xzf "$FONTS_TAR" -C "$TARGET_DIR"
     fc-cache -f "$TARGET_DIR"
     info "Custom Nerd Fonts installed successfully."
+fi
+
+# 9. v4l2loopback virtual webcam — auto-create a /dev/video10 "Phone Camera"
+#    so phone-camera.sh can stream into it without needing sudo at runtime.
+if pacman -Qq v4l2loopback-dkms &>/dev/null; then
+    info "Configuring v4l2loopback virtual webcam (/dev/video10)..."
+    echo 'options v4l2loopback devices=1 video_nr=10 card_label="Phone Camera" exclusive_caps=1' \
+        | sudo tee /etc/modprobe.d/v4l2loopback.conf >/dev/null
+    echo 'v4l2loopback' | sudo tee /etc/modules-load.d/v4l2loopback.conf >/dev/null
+    sudo modprobe v4l2loopback 2>/dev/null \
+        && info "v4l2loopback loaded (virtual cam ready; persists across reboots)." \
+        || warn "v4l2loopback will load on next reboot (module just built by dkms)."
 fi
 
 info "Bootstrap complete! Reboot now to load into Hyprland."

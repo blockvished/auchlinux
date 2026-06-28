@@ -142,11 +142,24 @@ for file in "${FILES[@]}"; do
   fi
 done
 
-# Sync keepassxc config (lives in its own subdir)
+# Sync keepassxc config (lives in its own subdir).
+# KeePassXC rewrites its ini on exit, so a running instance would clobber what we
+# deploy. Kill it first (-9, so it can't write back), copy the config, then
+# relaunch — this makes the dark theme (GUI/ApplicationTheme=dark) actually apply.
 if [ -f "$REPO_CONFIG_DIR/keepassxc/keepassxc.ini" ]; then
   echo "[Sync] Syncing keepassxc config..."
+  kp_was_running=false
+  if pgrep -x keepassxc >/dev/null; then
+    kp_was_running=true
+    pkill -9 -x keepassxc 2>/dev/null
+    sleep 1
+  fi
   mkdir -p "$TARGET_DIR/keepassxc"
   cp -f "$REPO_CONFIG_DIR/keepassxc/keepassxc.ini" "$TARGET_DIR/keepassxc/keepassxc.ini"
+  if [ "$kp_was_running" = true ]; then
+    echo "[Reload] Restarting keepassxc to apply theme..."
+    (keepassxc >/dev/null 2>&1 &)
+  fi
 fi
 
 if [ -f "$REPO_CONFIG_DIR/dolphinstaterc" ]; then
