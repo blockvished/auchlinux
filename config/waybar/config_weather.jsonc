@@ -1,0 +1,17 @@
+// Standalone weather bar — a separate Waybar instance (NOT part of the auch
+// bar). Transparent + non-exclusive so it floats as a top-left pill over the
+// desktop and reserves no screen space. Started by weather-bar.sh / autostart.
+{
+    "name": "weather",
+    "layer": "top",
+    "position": "top",
+    "exclusive": false,
+    "passthrough": false,
+    "margin-top": 10,
+    "margin-left": 18,
+    "spacing": 0,
+    "include": [ "~/.config/waybar/weather.jsonc" ],
+    "modules-left": [ "custom/weather" ],
+    "modules-center": [],
+    "modules-right": []
+}

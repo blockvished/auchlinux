@@ -128,6 +128,20 @@ hl.window_rule({
     center = true,
 })
 
+-- ── Pin autostarted apps to their workspaces ───────────────────
+-- KeePassXC → ws9, Discord → ws10. "silent" sends them there in the
+-- background without pulling focus away during boot.
+hl.window_rule({
+    name      = "keepassxc-ws9",
+    match     = { class = "^(org.keepassxc.KeePassXC)$" },
+    workspace = "9 silent",
+})
+hl.window_rule({
+    name      = "discord-ws10",
+    match     = { class = "^(discord|vesktop|WebCord)$" },
+    workspace = "10 silent",
+})
+
 -- ── Per-App Opacity ────────────────────────────────────────────
 -- Browsers: slight transparency for depth
 hl.window_rule({ name = "opacity-browser",   match = { class = "^(firefox|brave-browser|chromium|zen)$" }, opacity = "0.92 0.85" })

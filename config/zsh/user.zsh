@@ -14,7 +14,7 @@ if [[ $- == *i* ]]; then
             fastfetch
         fi
     elif [[ "$theme_mode" == "onmeds" ]]; then
-        # Onmeds Style: Powerline compact prompt + fastfetch (no pokemon)
+        # Onmeds Style: Powerline compact prompt + fastfetch
         export STARSHIP_CONFIG="$HOME/.config/starship/starship_onmeds.toml"
         if command -v fastfetch >/dev/null; then
             fastfetch
@@ -26,13 +26,9 @@ if [[ $- == *i* ]]; then
             fastfetch
         fi
     else
-        # Lol Style: Custom prompt + Pokemon graphics
+        # Lol Style: Custom prompt + fastfetch
         export STARSHIP_CONFIG="$HOME/.config/starship/starship_lol.toml"
-        if command -v pokego >/dev/null; then
-            pokego --no-title -r 1,3,6
-        elif command -v pokemon-colorscripts >/dev/null; then
-            pokemon-colorscripts --no-title -r 1,3,6
-        elif command -v fastfetch >/dev/null; then
+        if command -v fastfetch >/dev/null; then
             fastfetch
         fi
     fi

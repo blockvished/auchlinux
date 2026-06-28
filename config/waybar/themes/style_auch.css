@@ -92,7 +92,7 @@ button:hover {
 #hyprland-window,
 #scratchpad,
 #power-profiles-daemon,
-#window {    
+#window {
     margin: 0 4px;
     padding: 0 13px;
     color: @text;

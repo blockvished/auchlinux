@@ -10,6 +10,7 @@ hl.on("hyprland.start", function()
     
     -- Start services via systemd user units
     hl.exec_cmd("systemctl --user start waybar")
+    hl.exec_cmd("~/.config/waybar/scripts/weather-bar.sh start")  -- standalone weather pill
     hl.exec_cmd("systemctl --user start hypridle")
     hl.exec_cmd("command -v swaync >/dev/null 2>&1 && systemctl --user start swaync || systemctl --user start dunst")
     
@@ -17,6 +18,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("pgrep -x xsettingsd >/dev/null || xsettingsd &")
     hl.exec_cmd("awww-daemon")
     hl.exec_cmd("pgrep -x nm-applet >/dev/null || nm-applet --indicator")
+    hl.exec_cmd("pgrep -x blueman-applet >/dev/null || blueman-applet &")
     hl.exec_cmd("~/.config/hypr/scripts/clipboard-watch.sh")
     hl.exec_cmd("pypr")
     
@@ -24,7 +26,11 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("pgrep -x xembedsniproxy >/dev/null || xembedsniproxy &")
     
     -- Start background applications in the system tray
-    hl.exec_cmd("pgrep -x steam >/dev/null || steam -silent &")
+    -- hl.exec_cmd("pgrep -x steam >/dev/null || steam -silent &")
     hl.exec_cmd("pgrep -x discord >/dev/null || discord --start-minimized &")
     hl.exec_cmd("pgrep -x keepassxc >/dev/null || keepassxc &")
+    -- LocalSend (Wi-Fi file sharing). Uncomment to autostart; first enable
+    -- "Minimize to tray" + "Launch at startup" inside LocalSend → Settings,
+    -- otherwise its window pops up on every login.
+    -- hl.exec_cmd("pgrep -x localsend_app >/dev/null || localsend_app &")
 end)

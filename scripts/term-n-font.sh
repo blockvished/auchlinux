@@ -3,7 +3,7 @@
 #  Terminal & Zsh Setup Script for newpr on Arch Linux
 #  Run this after a fresh install to get the full themed shell & terminal experience.
 #  Includes: oh-my-zsh, autosuggestions, syntax-highlighting, Starship,
-#            theme switcher, custom Nerd Fonts, fzf, eza, fastfetch, pokemon
+#            theme switcher, custom Nerd Fonts, fzf, eza, fastfetch
 #
 #  Usage: ./scripts/term-n-font.sh
 #  From the auchlinux repo root.
@@ -30,12 +30,6 @@ section "Checking / Installing required packages"
 PACMAN_PKGS=(
     zsh starship eza fzf fastfetch zoxide bat ripgrep fd git curl rsync
 )
-AUR_PKGS=( pokego-bin )   # Pokemon ASCII art for HyDE theme
-
-AUR_HELPER=""
-for helper in yay paru; do
-    command -v "$helper" &>/dev/null && AUR_HELPER="$helper" && break
-done
 
 info "Checking pacman packages..."
 MISSING_PACMAN=()
@@ -47,22 +41,6 @@ if [[ ${#MISSING_PACMAN[@]} -gt 0 ]]; then
     sudo pacman -S --needed --noconfirm "${MISSING_PACMAN[@]}"
 else
     ok "All pacman packages already installed"
-fi
-
-if [[ -n "$AUR_HELPER" ]]; then
-    info "Checking AUR packages via $AUR_HELPER..."
-    MISSING_AUR=()
-    for pkg in "${AUR_PKGS[@]}"; do
-        pacman -Q "$pkg" &>/dev/null || MISSING_AUR+=("$pkg")
-    done
-    if [[ ${#MISSING_AUR[@]} -gt 0 ]]; then
-        "$AUR_HELPER" -S --needed --noconfirm "${MISSING_AUR[@]}" \
-            || warn "Some AUR packages failed — HyDE theme will fall back to fastfetch"
-    else
-        ok "All AUR packages already installed"
-    fi
-else
-    warn "No AUR helper (yay/paru) found. Install pokego-bin manually for pokemon art."
 fi
 
 # ─── 2. Default shell → Zsh ──────────────────────────────────────────────────
@@ -242,7 +220,6 @@ printf "  %-34s %s\n" "starship"                     "$(check starship) $(starsh
 printf "  %-34s %s\n" "eza"                           "$(check eza)"
 printf "  %-34s %s\n" "fzf"                           "$(check fzf) $(fzf --version 2>/dev/null || echo)"
 printf "  %-34s %s\n" "fastfetch"                    "$(check fastfetch)"
-printf "  %-34s %s\n" "pokego (pokemon art)"          "$(check pokego || echo "✗ (install pokego-bin from AUR)")"
 printf "  %-34s %s\n" "Active theme"                 "$(cat "$THEME_FILE" 2>/dev/null || echo lol)"
 printf "  %-34s %s\n" "Starship config linked"        "$([[ -L "$STARSHIP_LINK" ]] && readlink "$STARSHIP_LINK" | xargs basename || echo "✗ NOT linked")"
 echo ""
@@ -256,7 +233,7 @@ echo "  ╠═══════════════════════
 echo "  ║  Keybind: Super + Alt + T  or  Super + Shift + T    ║"
 echo "  ║  Cycles:  lol → newpr → onmeds → end4 → lol          ║"
 echo "  ╠══════════════════════════════════════════════════════╣"
-echo "  ║  lol     │ Starship (lol/Pokemon) + Pokemon art      ║"
+echo "  ║  lol     │ Starship (lol)         + fastfetch        ║"
 echo "  ║  newpr   │ Starship (Minimalist)  + fastfetch        ║"
 echo "  ║  onmeds  │ Starship (Powerline)   + fastfetch        ║"
 echo "  ║  end4    │ Starship (End4)        + fastfetch        ║"

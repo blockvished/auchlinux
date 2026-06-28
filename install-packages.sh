@@ -175,17 +175,19 @@ OFFICIAL_PKGS=(
     linux-zen-headers      # required to build the v4l2loopback dkms module (zen kernel)
     guvcview               # GUI webcam viewer / control panel
     obs-studio             # advanced capture/streaming + virtual camera
-    scrcpy                 # phone mirroring (also a USB camera source)
+    scrcpy                 # phone mirroring + USB camera source (--v4l2-sink)
+    android-tools          # adb: USB/Wi-Fi device bridge for scrcpy & port-forward
 )
 
 # 4. AUR packages to install
 AUR_PKGS=(
     pyprland
     ttf-material-symbols-variable-git
-    pokego-bin
     zsh-256color
     grimblast-git
     droidcam                # phone-as-webcam client (Wi-Fi/USB)
+    sndcpy                  # forward Android audio over USB (older phones; scrcpy 2.0+ does it natively)
+    localsend-bin           # cross-platform Wi-Fi file sharing (prebuilt; avoids long Flutter build)
 )
 
 # Install official packages

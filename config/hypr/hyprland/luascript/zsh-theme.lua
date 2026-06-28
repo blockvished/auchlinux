@@ -8,7 +8,7 @@ local kitty_dir = home .. "/.config/kitty"
 
 local cycle = {"lol", "newpr", "onmeds", "end4"}
 local labels = {
-    lol = "lol    → Starship Pokemon + Pokemon art",
+    lol = "lol    → Starship (lol) + fastfetch",
     newpr = "newpr  → Starship Minimal + fastfetch",
     onmeds = "onmeds → Starship Powerline + fastfetch",
     end4 = "end4   → Starship End4 + fastfetch (End4 Black layout)"
