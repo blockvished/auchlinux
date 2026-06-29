@@ -78,7 +78,10 @@ hl.bind(mainMod .. " + CTRL + T", luafunctions.toggle_rofi_theme)
 hl.bind(mainMod .. " + SHIFT + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/rofi-themeselect.sh"))
 hl.bind(mainMod .. " + ALT + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/rofi-web-search.sh"))
 -- Toggle Game Mode (custom Lua script)
-hl.bind(mainMod .. " + G", luafunctions.toggle_gamemode)
+-- Old gamemode kept for reference; binding commented out per request (will fold
+-- in lol's waybar/rofi curve-flattening into toggle_gamemode2 later).
+-- hl.bind(mainMod .. " + G", luafunctions.toggle_gamemode)
+hl.bind(mainMod .. " + G", luafunctions.toggle_gamemode2)
 hl.bind(mainMod .. " + comma", hl.dsp.exec_cmd("~/.config/hypr/scripts/glyph-picker.sh"))
 hl.bind(mainMod .. " + period", hl.dsp.exec_cmd("~/.config/hypr/scripts/emoji-picker.sh"))
 hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd("swaync-client -t -sw"))

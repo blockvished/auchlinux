@@ -10,7 +10,6 @@ hl.on("hyprland.start", function()
     
     -- Start services via systemd user units
     hl.exec_cmd("systemctl --user start waybar")
-    hl.exec_cmd("~/.config/waybar/scripts/weather-bar.sh start")  -- standalone weather pill
     hl.exec_cmd("systemctl --user start hypridle")
     hl.exec_cmd("command -v swaync >/dev/null 2>&1 && systemctl --user start swaync || systemctl --user start dunst")
     

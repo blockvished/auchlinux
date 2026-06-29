@@ -45,6 +45,54 @@ function M.toggle_gamemode()
     end
 end
 
+-- New Game Mode (canonical) — ports lol/HyDE's gaming workflow to this lua setup.
+-- lol does: ON = `hyprctl keyword source gaming.conf`, OFF = `hyprctl reload
+-- config-only`. `hyprctl keyword` is disabled here ("non-legacy parser"), so we
+-- apply the same effects through the lua API and revert with reload config-only
+-- (which restores everything from the persistent config and drops the runtime
+-- rules we add). Mirrors lol's gaming.conf: rounding 0, no shadow/blur/anims,
+-- zero gaps, all windows opaque, and — the bit you wanted — a layerrule that
+-- kills blur + animations on the rofi / waybar / notification layers too.
+function M.toggle_gamemode2()
+    local home = os.getenv("HOME") or "/home/newpr"
+    local rt   = os.getenv("XDG_RUNTIME_DIR") or "/tmp"
+    local lock = rt .. "/hypr/gamemode.lck"
+    local f = io.open(lock, "r")
+    if f then
+        -- ── Game mode is ON → turn it OFF ────────────────────────────────
+        f:close()
+        os.remove(lock)
+        -- Restore the full config (clears the runtime config/layer/window rules).
+        os.execute("hyprctl reload config-only -q")
+        os.execute(home .. "/.config/waybar/scripts/waybar-theme auch >/dev/null 2>&1 &")
+        os.execute("notify-send -a 'Game Mode' -i 'dialog-information' -u low 'Game Mode' 'Aesthetic Mode Restored' &")
+    else
+        -- ── Game mode is OFF → turn it ON ────────────────────────────────
+        os.execute("mkdir -p " .. rt .. "/hypr && touch " .. lock)
+        hl.config({
+            animations = { enabled = false },
+            general    = { gaps_in = 0, gaps_out = 0, border_size = 1 },
+            decoration = {
+                shadow = { enabled = false },
+                blur   = { enabled = false, xray = true },
+                rounding = 0,
+                active_opacity = 1, inactive_opacity = 1, fullscreen_opacity = 1,
+            },
+        })
+        -- Force every window opaque (beats the per-app opacity rules).
+        hl.window_rule({ name = "gamemode-opaque", match = { class = "(.*)" }, opacity = "1.0 1.0 1.0" })
+        -- Flatten the shell layers too: no blur, no animations on rofi/waybar/notifs.
+        hl.layer_rule({
+            name   = "gamemode",
+            blur   = false,
+            no_anim = true,
+            match  = { namespace = "^(rofi|notifications|swaync-(notification-window|control-center)|logout_dialog|waybar|.*www-daemon)$" },
+        })
+        os.execute(home .. "/.config/waybar/scripts/waybar-theme min >/dev/null 2>&1 &")
+        os.execute("notify-send -a 'Game Mode' -i 'dialog-information' -u low 'Game Mode' 'Performance Mode On (flat corners, no blur/anims)' &")
+    end
+end
+
 -- Active Window Audio Muter (Native Lua implementation)
 function M.mute_active_window()
     -- Get active window details
